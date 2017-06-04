@@ -1,0 +1,56 @@
+:root {
+  /* fonts */
+  --font-family-sans-serif: "Sharp Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+  /* font sizes */
+  --max-font-size: 1rem;
+  --unitless-max-font-size: 1;
+  --font-size-4: 1.25rem;
+
+  /* weights */
+  --book: 400;
+  --medium: 500;
+  --semibold: 600;
+  --bold: 700;
+  --extrabold: 800;
+
+  /* colors */
+  --gray-darkest: hsl(0, 0%, 0%);
+  --pink: hsl(300, 100%, 50%);
+  --cyan: hsl(180, 100%, 50%);
+  --green: hsl(120, 100%, 50%);
+
+  /* applied colors */
+  --text-color: var(--gray-darkest);
+  --border-color: var(--gray-darkest);
+  --writer-color: var(--pink);
+  --director-color: var(--cyan);
+  --editor-color: var(--green);
+
+  /* border-radius */
+  --border-radius: 0;
+
+  /* @apply rules */
+  --all-caps: {
+    font-size: var(--font-size-small);
+    text-transform: uppercase;
+    font-weight: var(--bold);
+    letter-spacing: 0.2em;
+    color: var(--text-color);
+    @media (--desktop) {
+      font-size: 0.75rem;
+    }
+  };
+
+  --clearfix: {
+    &::after {
+      display: table;
+      clear: both;
+      content: "";
+    }
+  }
+
+  /* custom media queries */
+  @custom-media --tablet (width >= 40rem);
+  @custom-media --desktop (width >= 60rem);
+}

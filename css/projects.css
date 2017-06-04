@@ -1,0 +1,118 @@
+.projects {
+  margin-top: 6rem;
+  @media (--tablet) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-right: -1rem;
+    margin-left: -1rem;
+  }
+  @media (--desktop) {
+    position: relative;
+    z-index: 5;
+  }
+}
+
+.project {
+  cursor: pointer;
+  @media (--tablet) {
+    flex-basis: calc(50% - 2rem);
+    margin: 0 1rem 2rem;
+  }
+  @media (--desktop) {
+    flex-basis: calc(33.333% - 2rem);
+    position: relative;
+    margin: 0 1rem 2rem;
+  }
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+    @media (--desktop) {
+      margin-bottom: 2rem;
+    }
+  }
+  & .project-info {
+    @media (--desktop) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+      transition: background-color var(--speed) var(--easing);
+    }
+  }
+  & .project-type {
+    display: inline-block;
+    position: relative;
+    max-width: 75%;
+    font-size: var(--font-size-large);
+    font-weight: var(--bold);
+    @media (--desktop) {
+      max-width: 100%;
+      color: #fff;
+    }
+    &::after {
+      display: block;
+      position: absolute;
+      bottom: -0.25em;
+      left: 0;
+      width: calc(100% + 1.5rem);
+      max-width: calc(100vw - (var(--container-horizontal-padding) * 2));
+      height: 2px;
+      background-color: var(--border-color);
+      content: '';
+      @media (--desktop) {
+        width: 100%;
+        max-width: 0;
+        background-color: #fff;
+        transition: max-width var(--speed) var(--easing);
+      }
+    }
+  }
+  & .project-lead {
+    font-size: var(--font-size-small);
+    font-weight: var(--medium);
+    @media (--desktop) {
+      max-height: 0;
+      overflow: hidden;
+      margin: 0;
+      font-size: var(--font-size-5);
+      text-align: center;
+      color: #fff;
+      transition: max-height var(--speed) var(--easing);
+    }
+  }
+  &:hover {
+    & .project-info {
+      @media (--desktop) {
+        background-color: var(--writer-color);
+      }
+    }
+    & .project-type::after {
+      @media (--desktop) {
+        max-width: 100%;
+      }
+    }
+    & .project-lead {
+      @media (--desktop) {
+        max-height: 100px;
+      }
+    }
+  }
+}
+
+.project-thumbnail {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 30% 0;
+  background-color: var(--gray-light);
+  @media (--desktop) {
+    margin-bottom: 0;
+    padding: 65% 0;
+  }
+}

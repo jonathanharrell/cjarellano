@@ -1,0 +1,63 @@
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Book.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Book.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-Book.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-Book.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: italic;
+  font-weight: 400;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-BookIt.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-BookIt.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-BookIt.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-BookIt.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Medium.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-Medium.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: italic;
+  font-weight: 500;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-MediumIt.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-MediumIt.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-MediumIt.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-MediumIt.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Semibold.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Semibold.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-Semibold.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-Semibold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: italic;
+  font-weight: 600;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-SemiboldIt.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-SemiboldIt.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-SemiboldIt.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-SemiboldIt.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Bold.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-Bold.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sharp Sans";
+  font-style: normal;
+  font-weight: 800;
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Extrabold.eot");
+  src: url("../fonts/sharp-sans/SharpSansDispNo1-Extrabold.eot?#iefix") format("embedded-opentype"), url("../fonts/sharp-sans/SharpSansDispNo1-Extrabold.woff") format("woff"), url("../fonts/sharp-sans/SharpSansDispNo1-Extrabold.ttf") format("truetype");
+}

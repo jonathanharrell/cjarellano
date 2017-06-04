@@ -1,0 +1,126 @@
+.reel-page {
+  @media (--desktop) {
+    margin-top: 15rem;
+  }
+}
+
+.reel {
+  @apply --clearfix;
+  position: relative;
+  @media (--desktop) {
+    margin-bottom: 0;
+  }
+  & .image {
+    width: 100%;
+    margin-bottom: 1.75rem;
+    padding: 30% 0;
+    background-color: var(--gray-light);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    @media (--desktop) {
+      width: 75%;
+      margin-bottom: 0;
+      padding: 25% 0;
+    }
+  }
+  & .lead {
+    margin-bottom: 1.5rem;
+    font-size: var(--font-size-1);
+    line-height: 1.2;
+    font-weight: var(--bold);
+    @media (--desktop) {
+      position: absolute;
+      top: -8.75rem;
+      left: 40%;
+      width: 80rem;
+      font-size: 10rem;
+      line-height: 1.05;
+      mix-blend-mode: multiply;
+    }
+  }
+  & .watch-video {
+    @media (--desktop) {
+      position: absolute;
+      bottom: 33.333%;
+    }
+  }
+}
+
+.watch-video {
+  flex-direction: column;
+  align-items: flex-start;
+  float: right;
+  position: relative;
+  width: 75%;
+  max-width: 400px;
+  height: auto;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 2px 44px rgba(0, 0, 0, 0.15);
+  background-color: #fff !important;
+  &::after {
+    position: absolute;
+    top: 50%;
+    right: 1em;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 12px solid currentColor;
+    transform: translateY(-50%);
+    content: '';
+  }
+  & span {
+    display: block;
+  }
+}
+
+.writer .watch-video {
+  &::after {
+    border-left-color: var(--writer-color);
+  }
+  &:hover .video-lead {
+    color: var(--writer-color);
+  }
+}
+
+.video-lead {
+  margin-bottom: 0.25em;
+  font-size: var(--font-size-large);
+  font-weight: var(--bold);
+}
+
+.watch-it {
+  @apply --all-caps;
+}
+
+.writer {
+  & .reel .lead {
+    color: var(--writer-color);
+  }
+}
+
+.selected-projects {
+  @media (--desktop) {
+    margin-top: 0;
+  }
+  & .projects {
+    @media (--desktop) {
+      margin-top: -5rem;
+    }
+  }
+  & .project {
+    @media (--desktop) {
+      &:nth-child(2) {
+        margin-top: 10rem;
+      }
+      &:nth-child(4),
+      &:nth-child(5) {
+        margin-top: -10rem;
+      }
+      &:nth-child(5) {
+        align-self: flex-end;
+      }
+    }
+  }
+}

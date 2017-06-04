@@ -1,0 +1,21 @@
+/* stylelint-disable */
+@import "../node_modules/hiq/dist/hiq.css";
+/* stylelint-enable */
+
+@import "fonts.css";
+@import "variables.css";
+@import "header.css";
+@import "footer.css";
+@import "reel.css";
+@import "projects.css";
+@import "home.css";
+@import "single-project.css";
+
+body {
+  overflow-x: hidden;
+}
+
+.main-content {
+  margin-top: 56px;
+}
+

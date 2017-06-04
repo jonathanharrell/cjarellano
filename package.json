@@ -1,0 +1,50 @@
+{
+  "name": "cjarellano-v3",
+  "version": "1.0.0",
+  "description": "C.J. Arellano's portfolio site.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node_modules/.bin/webpack",
+    "production": "NODE_ENV=production node_modules/.bin/webpack",
+    "watch": "npm run dev -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://jh-design@bitbucket.org/jh-design/cjarellano-v3.git"
+  },
+  "author": "Jonathan Harrell",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/jh-design/cjarellano-v3#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.18.8",
+    "browser-sync-webpack-plugin": "^1.1.4",
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.0",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "img-loader": "^2.0.0",
+    "postcss-cssnext": "^2.10.0",
+    "postcss-import": "^9.1.0",
+    "postcss-loader": "^1.3.3",
+    "purifycss-webpack": "^0.6.1",
+    "style-loader": "^0.16.1",
+    "stylelint-config-standard": "^16.0.0",
+    "stylelint-order": "^0.4.3",
+    "stylelint-webpack-plugin": "^0.7.0",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "hiq": "^0.1.0"
+  }
+}

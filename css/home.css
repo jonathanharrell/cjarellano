@@ -1,0 +1,75 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  min-height: 500px;
+  padding: 2rem 0;
+  /* adjust height on mobile devices to take account of bottom bar */
+  @media (pointer: coarse) {
+    height: calc(100vh - 60px);
+  }
+  @media (--desktop) {
+    padding: 3rem 0;
+  }
+  & main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    & .container {
+      width: 100%;
+    }
+  }
+  & h1 {
+    margin-bottom: 0;
+    font-weight: var(--extrabold);
+    @media (--desktop) {
+      font-size: 3.5rem;
+    }
+  }
+  & nav {
+    margin: 0;
+    line-height: 1.2;
+    & a {
+      margin-right: 0.125em;
+      font-size: var(--font-size-1);
+      font-weight: var(--extrabold);
+      @media (--desktop) {
+        font-size: 3.5rem;
+      }
+      &::after {
+        content: '.';
+      }
+    }
+  }
+  & footer {
+    margin-top: auto;
+    & a {
+      font-weight: var(--semibold);
+      color: var(--gray-dark);
+    }
+  }
+}
+
+.writer-link {
+  color: var(--writer-color);
+  &:hover {
+    color: color(var(--writer-color) shade(15%));
+  }
+}
+
+.director-link {
+  color: var(--director-color);
+  &:hover {
+    color: color(var(--director-color) shade(15%));
+  }
+}
+
+.editor-link {
+  color: var(--editor-color);
+  &:hover {
+    color: color(var(--editor-color) shade(15%));
+  }
+}
+
