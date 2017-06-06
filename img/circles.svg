@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg height="100%" width="100%" viewBox="0 0 1440 870" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="circles">
+    <title>circles</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy-3" stroke-width="35" stroke="#FFFFFF">
+            <g id="circles" transform="translate(-3.000000, -289.000000)">
+                <circle id="Oval" cx="723.5" cy="724.5" r="74"></circle>
+                <circle id="Oval" cx="723.5" cy="724.5" r="179"></circle>
+                <circle id="Oval" cx="723.5" cy="724.5" r="285"></circle>
+                <circle id="Oval" cx="723.5" cy="724.5" r="387"></circle>
+                <circle id="Oval" cx="723.5" cy="724.5" r="491"></circle>
+                <circle id="Oval" cx="723.5" cy="723.5" r="601"></circle>
+                <circle id="Oval" cx="723.5" cy="723.5" r="706"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

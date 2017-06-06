@@ -12,6 +12,10 @@
   @media (--desktop) {
     padding: 3rem 0;
   }
+  & main,
+  & footer {
+    z-index: 1;
+  }
   & main {
     display: flex;
     flex: 1;
@@ -72,4 +76,19 @@
     color: color(var(--editor-color) shade(15%));
   }
 }
+
+body {
+  transition: background-color 0.4s var(--easing);
+}
+
+.director-link-hover {
+  @media (--desktop) {
+    background-color: var(--director-color);
+    background-image: url('../img/circles.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}
+
 
