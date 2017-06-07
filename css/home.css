@@ -36,14 +36,41 @@
     margin: 0;
     line-height: 1.2;
     & a {
+      display: inline-block;
+      position: relative;
       margin-right: 0.125em;
       font-size: var(--font-size-1);
       font-weight: var(--extrabold);
+      transform: scale(1);
+      transition: transform 0.4s var(--easing);
       @media (--desktop) {
         font-size: 3.5rem;
       }
+      &::before {
+        display: block;
+        position: absolute;
+        top: -0.75rem;
+        left: -1.5rem;
+        z-index: -1;
+        width: calc(100% + 3rem);
+        height: calc(100% + 1.5rem);
+        box-shadow: 0 2px 44px rgba(0, 0, 0, 0.15);
+        background-color: #fff;
+        opacity: 0;
+        transition: opacity 0.4s var(--easing);
+        content: '';
+      }
       &::after {
         content: '.';
+      }
+      &:hover {
+        @media (--desktop) {
+          z-index: 5;
+          transform: scale(1.04);
+          &::before {
+            opacity: 1;
+          }
+        }
       }
     }
   }
@@ -78,17 +105,30 @@
 }
 
 body {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   transition: background-color 0.4s var(--easing);
+}
+
+.writer-link-hover {
+  @media (--desktop) {
+    background-color: var(--writer-color);
+    background-image: url('../img/triangles.svg');
+  }
 }
 
 .director-link-hover {
   @media (--desktop) {
     background-color: var(--director-color);
     background-image: url('../img/circles.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
   }
 }
 
+.editor-link-hover {
+  @media (--desktop) {
+    background-color: var(--editor-color);
+    background-image: url('../img/diamonds.svg');
+  }
+}
 
