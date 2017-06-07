@@ -1,22 +1,17 @@
-<?php include 'partials/head.php'; ?>
+<?php
+/**
+ * Front to the WordPress application. This file doesn't do anything, but loads
+ * wp-blog-header.php which does and tells WordPress to load the theme.
+ *
+ * @package WordPress
+ */
 
-<div class="wrapper home">
-    <main>
-        <div class="container">
-            <h1>C.J. Arellano</h1>
-            <nav>
-                <a href="writer.php" class="writer-link">Writer</a>
-                <a href="" class="director-link">Director</a>
-                <a href="" class="editor-link">Editor</a>
-            </nav>
-        </div>
-    </main>
-    <footer role="contentinfo">
-        <div class="container">
-            <a href="mailto:cj@cjarellano.com">cj@cjarellano.com</a>
-            <?php include 'partials/social-links.php'; ?>
-        </div>
-    </footer>
-</div>
+/**
+ * Tells WordPress to load the WordPress theme and output it.
+ *
+ * @var bool
+ */
+define('WP_USE_THEMES', true);
 
-<?php include 'partials/end.php'; ?>
+/** Loads the WordPress Environment and Template */
+require( dirname( __FILE__ ) . '/wp-blog-header.php' );
