@@ -1,4 +1,4 @@
-.home {
+.page-template-page-home {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,6 +43,7 @@
       font-weight: var(--extrabold);
       transform: scale(1);
       transition: transform 0.4s var(--easing);
+      will-change: transform;
       @media (--desktop) {
         font-size: 3.5rem;
       }
@@ -58,6 +59,7 @@
         background-color: #fff;
         opacity: 0;
         transition: opacity 0.4s var(--easing);
+        will-change: opacity;
         content: '';
       }
       &::after {
@@ -109,6 +111,7 @@ body {
   background-position: center;
   background-size: cover;
   transition: background-color 0.4s var(--easing);
+  will-change: background-color;
 }
 
 .writer-link-hover {

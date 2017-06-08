@@ -15,7 +15,7 @@
 }
 
 .project {
-  cursor: pointer;
+  position: relative;
   @media (--tablet) {
     flex-basis: calc(50% - 2rem);
     margin: 0 1rem 2rem;
@@ -30,6 +30,10 @@
     @media (--desktop) {
       margin-bottom: 2rem;
     }
+  }
+  & a {
+    @apply --absolute-stretch;
+    z-index: 5;
   }
   & .project-info {
     @media (--desktop) {

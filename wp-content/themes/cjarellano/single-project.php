@@ -1,12 +1,16 @@
-<?php include 'partials/head.php'; ?>
-<?php include 'partials/header.php'; ?>
+<?php
+the_post();
+get_header();
+?>
+
+<?php include 'partials/site-header.php'; ?>
 
 <main class="main-content">
-    <article class="single-project">
+    <article class="single-project-content">
         <div class="container">
             <header class="project-header">
-                <h1 class="project-title" data-title="Mind over Marriage">Mind over Marriage</h1>
-                <p class="project-type">Television Pilot</p>
+                <h1 class="project-title" data-title="<?php the_title(); ?>"><?php the_title(); ?></h1>
+                <p class="project-type"><?php the_field('cja_project_type'); ?></p>
             </header>
             <div class="image-container">
                 <div class="image" style="background-image: url('img/mind-over-marriage.jpg');"></div>
@@ -15,18 +19,20 @@
                 </button>
             </div>
             <section class="project-info">
-                <p class="project-lead">
-                    In this sci-fi dramedy pilot, spouses gain the ability to read each other's minds.
-                </p>
-                <div class="project-description">
-                    <p>I shot a test video with John Cates and Kate James for a corporate project. Reviewing the footage, I was tickled by their natural comic chemistry, and I wanted to write something that showcased their rapport. After envisioning them as a married couple beset by telepathic powers, I drew up the script for “Mind Over Marriage.”</p>
-                    <p>Conceived as something that could work as a stand-alone story and a series pilot, “Mind Over Marriage” was shot over a period of four days, buoyed by the assured cinematography of Adam Orton. It was during this project where I learned one of my most cherished rules of directing: when you hire talented actors who appreciate the needs of the story and characters, it's often best to call “Action!” and just get out of the way.</p>
-                </div>
-                <ul class="project-contributions">
-                    <li class="contribution-writer">Writer</li>
-                    <li class="contribution-director">Director</li>
-                    <li class="contribution-editor">Editor & Motion Graphics</li>
-                </ul>
+                <?php the_content(); ?>
+                <?php
+                $contributions = get_terms('project_category');
+                if($contributions) :
+                    ?>
+                    <ul class="project-contributions">
+                        <?php foreach($contributions as $contribution) :
+                            $noun = get_field('cja_project_category_noun_form', $contribution->taxonomy.'_'.$contribution->term_id); ?>
+                            <li class="contribution-<?php echo strtolower($noun); ?>">
+                                <?php echo $noun; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </section>
             <aside class="project-awards">
                 <h2 class="visually-hidden">Awards</h2>
@@ -46,6 +52,7 @@
             <h2 class="visually-hidden">Related Projects</h2>
             <div class="projects">
                 <article class="project">
+                    <a href=""></a>
                     <div class="project-thumbnail"></div>
                     <div class="project-info">
                         <h3 class="project-type">Feature Screenplay</h3>
@@ -53,6 +60,7 @@
                     </div>
                 </article>
                 <article class="project">
+                    <a href=""></a>
                     <div class="project-thumbnail"></div>
                     <div class="project-info">
                         <h3 class="project-type">Commercial Parody</h3>
@@ -60,6 +68,7 @@
                     </div>
                 </article>
                 <article class="project">
+                    <a href=""></a>
                     <div class="project-thumbnail"></div>
                     <div class="project-info">
                         <h3 class="project-type">Commercial Parody</h3>
@@ -71,5 +80,6 @@
     </section>
 </main>
 
-<?php include 'partials/footer.php'; ?>
-<?php include 'partials/end.php'; ?>
+<?php include 'partials/site-footer.php'; ?>
+
+<?php get_footer();

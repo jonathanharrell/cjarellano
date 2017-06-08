@@ -8,4 +8,4 @@
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/build/main.css">
     <?php wp_head(); ?>
 </head>
-<body>
+<body <?php body_class( $class ); ?>>
