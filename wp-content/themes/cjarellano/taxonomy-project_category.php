@@ -30,7 +30,7 @@ get_header();
                     'taxonomy' => 'project_category',
                     'field'    => 'id',
                     'terms'    => [get_queried_object()->term_id],
-                ],
+                ]
             ]
         ]);
 

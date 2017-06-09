@@ -34,17 +34,34 @@ get_header();
                     </ul>
                 <?php endif; ?>
             </section>
-            <aside class="project-awards">
-                <h2 class="visually-hidden">Awards</h2>
-                <ul>
-                    <li class="award">
-                        <h3 class="award-title">Sister Film Festival Winner</h3>
-                        <p class="award-source">
-                            <a href="">Illinois Internal Film Festival</a>
-                        </p>
-                    </li>
-                </ul>
-            </aside>
+            <?php if(have_rows('cja_project_award')) : ?>
+                <aside class="project-awards">
+                    <h2 class="visually-hidden">Awards</h2>
+                    <ul>
+                        <?php while(have_rows('cja_project_award')) : the_row();
+                            $source = get_sub_field('source');
+                            $link = get_sub_field('link');
+                            ?>
+                            <li class="award">
+                                <h3 class="award-title">
+                                    <?php the_sub_field('title'); ?>
+                                </h3>
+                                <?php if($source) : ?>
+                                    <p class="award-source">
+                                        <?php if($link) : ?>
+                                            <a href="<?php the_sub_field('link'); ?>">
+                                                <?php the_sub_field('source'); ?>
+                                            </a>
+                                        <?php else : ?>
+                                            <?php the_sub_field('source'); ?>
+                                        <?php endif; ?>
+                                    </p>
+                                <?php endif; ?>
+                            </li>
+                        <?php endwhile; ?>
+                    </ul>
+                </aside>
+            <?php endif; ?>
         </div>
     </article>
     <section class="related-projects">
