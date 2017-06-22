@@ -1,4 +1,4 @@
-.reel-page {
+.tax-project_category {
   @media (--desktop) {
     margin-top: 15rem;
   }
@@ -75,7 +75,7 @@
   }
 }
 
-.writer .watch-video {
+.term-writing .watch-video {
   &::after {
     border-left-color: var(--writer-color);
   }
@@ -94,7 +94,7 @@
   @apply --all-caps;
 }
 
-.writer {
+.term-writing {
   & .reel .lead {
     color: var(--writer-color);
   }

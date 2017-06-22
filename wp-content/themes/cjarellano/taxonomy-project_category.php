@@ -5,7 +5,7 @@ get_header();
 
 <?php include 'partials/site-header.php'; ?>
 
-<div class="wrapper reel-page writer">
+<div class="wrapper">
     <main class="main-content">
         <section class="reel">
             <h1 class="visually-hidden">Writer</h1>
@@ -13,9 +13,9 @@ get_header();
             <div class="container">
                 <p class="lead"><?php echo term_description(); ?></p>
                 <button class="watch-video">
-                    <span class="video-lead">Writing reel</span>
+                    <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
                     <span class="watch-it">Watch it</span>
-                    <?php the_field('cja_project_category_reel'); ?>
+                    <?php echo trim(get_field('cja_project_category_reel')); ?>
                 </button>
             </div>
         </section>
@@ -57,6 +57,10 @@ get_header();
             </section>
         <?php endif; ?>
     </main>
+</div>
+
+<div class="video-container">
+    <iframe src="<?php the_field('cja_project_category_reel'); ?>" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
 
 <?php include 'partials/site-footer.php'; ?>
