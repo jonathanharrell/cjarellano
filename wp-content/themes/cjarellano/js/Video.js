@@ -1,5 +1,5 @@
-import CJAVimeoPlayer from './CJAVimeoPlayer';
-import CJAYouTubePlayer from './CJAYouTubePlayer';
+import CJAVimeoPlayer from './CJAVimeoPlayer'
+import CJAYouTubePlayer from './CJAYouTubePlayer'
 
 export default class Video {
     constructor (videoButton) {
@@ -22,6 +22,7 @@ export default class Video {
 
     getVideoId () {
         const videoId = this.videoButton.dataset.videoId
+
         if (videoId) {
             this.videoId = videoId
         } else {
@@ -31,6 +32,7 @@ export default class Video {
 
     getVideoContainer () {
         const videoContainer = document.getElementById(this.videoId)
+
         if (videoContainer) {
             this.videoContainer = videoContainer
         } else {
@@ -40,6 +42,7 @@ export default class Video {
 
     getIFrame () {
         const iframe = this.videoContainer.querySelector('iframe')
+
         if (iframe) {
             this.iframe = iframe
         } else {
@@ -49,6 +52,7 @@ export default class Video {
 
     getType () {
         const src = this.iframe.src
+
         if (src.includes('vimeo')) {
             this.type = 'vimeo'
         } else if (src.includes('youtube')) {
@@ -74,14 +78,6 @@ export default class Video {
         this.player.pause()
     }
 
-    openModal () {
-        this.videoContainer.classList.add('visible')
-    }
-
-    closeModal () {
-        this.videoContainer.classList.remove('visible')
-    }
-
     initModal () {
         this.closeButton = this.videoContainer.querySelector('.close-video')
 
@@ -94,5 +90,13 @@ export default class Video {
             this.pause()
             this.closeModal()
         })
+    }
+
+    openModal () {
+        this.videoContainer.classList.add('visible')
+    }
+
+    closeModal () {
+        this.videoContainer.classList.remove('visible')
     }
 }

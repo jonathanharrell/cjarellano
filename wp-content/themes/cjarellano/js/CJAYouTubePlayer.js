@@ -1,4 +1,4 @@
-import YouTubePlayer from 'youtube-player';
+import YouTubePlayer from 'youtube-player'
 
 export default class CJAYouTubePlayer {
     constructor (iframe, closeModal) {
@@ -13,9 +13,10 @@ export default class CJAYouTubePlayer {
 
     play () {
         this.player.playVideo()
+
         this.player.on('stateChange', event => {
             if (event.data === 0) {
-                if(this.onVideoEnd) {
+                if (this.onVideoEnd) {
                     this.onVideoEnd()
                 }
             }
