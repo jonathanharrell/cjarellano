@@ -1,4 +1,21 @@
-import Video from './Video';
+import Video from './Video'
+
+// fade in
+const fadeInElement = el => {
+    el.classList.add('visible')
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const siteHeader = document.querySelector('.site-header')
+    const reelImage = document.querySelector('.reel .image')
+    const reelLead = document.querySelector('.reel .lead')
+    const watchVideo = document.querySelector('.reel .watch-video')
+
+    if (siteHeader) fadeInElement(siteHeader)
+    if (reelImage) fadeInElement(reelImage)
+    if (reelLead) fadeInElement(reelLead)
+    if (watchVideo) fadeInElement(watchVideo)
+})
 
 // mobile menu
 const menuOpen = document.querySelector('.menu-mobile-open')

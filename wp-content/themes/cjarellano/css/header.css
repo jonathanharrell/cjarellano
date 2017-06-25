@@ -10,6 +10,12 @@
   height: 56px;
   padding: 1rem var(--container-horizontal-padding);
   background: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  will-change: opacity;
+  &.visible {
+    opacity: 1;
+  }
   @media (--desktop) {
     height: 75px;
   }

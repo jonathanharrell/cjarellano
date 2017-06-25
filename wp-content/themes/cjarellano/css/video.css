@@ -7,11 +7,11 @@
   width: 100vw;
   height: 100vh;
   opacity: 0;
-  transition: opacity var(--speed) var(--easing), visibility var(--speed) var(--easing) var(--speed);
+  transition: opacity 0.2s var(--easing), visibility 0.2s var(--easing) var(--speed);
   &.visible {
     visibility: visible;
     opacity: 1;
-    transition: opacity var(--speed) var(--easing);
+    transition: opacity 0.2s var(--easing);
   }
   & iframe {
     width: 100%;

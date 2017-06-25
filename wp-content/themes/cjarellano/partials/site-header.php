@@ -1,4 +1,4 @@
-<header class="site-header">
+<header class="site-header transition-in">
     <a href="<?php echo esc_url(home_url('/')); ?>" class="brand">C.J. Arellano</a>
     <button class="menu-mobile-open">
         <span class="band-writer"></span>

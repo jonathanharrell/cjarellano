@@ -18,6 +18,14 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    opacity: 0;
+    transform: translateY(5rem);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    will-change: opacity, transform;
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
     @media (--desktop) {
       width: 75%;
       margin-bottom: 0;
@@ -29,6 +37,14 @@
     font-size: var(--font-size-1);
     line-height: 1.2;
     font-weight: var(--bold);
+    opacity: 0;
+    transform: translateX(5rem);
+    transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out 0.1s;
+    will-change: opacity, transform;
+    &.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
     @media (--desktop) {
       position: absolute;
       top: -8.75rem;
@@ -40,6 +56,12 @@
     }
   }
   & .watch-video {
+    opacity: 0;
+    transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    will-change: opacity, transform;
+    &.visible {
+      opacity: 1;
+    }
     @media (--desktop) {
       position: absolute;
       bottom: 33.333%;
@@ -57,7 +79,7 @@
   height: auto;
   padding: 1.25rem 1.5rem;
   box-shadow: 0 2px 44px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: #fff !important;
   &::after {
     position: absolute;
     top: 50%;
@@ -69,6 +91,10 @@
     border-left: 12px solid currentColor;
     transform: translateY(-50%);
     content: '';
+  }
+  &:hover {
+    box-shadow: 0 4px 66px rgba(0, 0, 0, 0.35);
+    transform: scale(1.025);
   }
   & span {
     display: block;

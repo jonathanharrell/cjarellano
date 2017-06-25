@@ -1,7 +1,7 @@
 import Player from '@vimeo/player'
 
 export default class CJAVimeoPlayer {
-    constructor(iframe, onVideoEnd = null) {
+    constructor (iframe, onVideoEnd = null) {
         this.iframe = iframe
         this.onVideoEnd = onVideoEnd
         this.player = null
