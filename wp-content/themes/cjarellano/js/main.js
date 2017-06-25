@@ -1,3 +1,6 @@
+import Video from './Video';
+
+// mobile menu
 const menuOpen = document.querySelector('.menu-mobile-open')
 
 if (menuOpen) {
@@ -14,6 +17,7 @@ if (menuClose) {
     })
 }
 
+// home page hover
 document.querySelectorAll('.home nav a').forEach(link => {
     link.addEventListener('mouseover', event => {
         const linkClass = event.target.className
@@ -25,3 +29,10 @@ document.querySelectorAll('.home nav a').forEach(link => {
         document.querySelector('body').classList.remove(`${linkClass}-hover`)
     })
 })
+
+// video
+const videos = document.querySelectorAll('.watch-video');
+for(let i = 0; i < videos.length; i++) {
+    const video = new Video(videos[i]);
+    video.init();
+}

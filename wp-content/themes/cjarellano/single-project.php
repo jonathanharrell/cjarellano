@@ -14,9 +14,23 @@ get_header();
             </header>
             <div class="image-container">
                 <div class="image" style="background-image: url('img/mind-over-marriage.jpg');"></div>
-                <button class="watch-video">
+                <button class="watch-video" data-video-id="reel-video">
                     <span class="video-lead">Play video</span>
                 </button>
+            </div>
+            <div class="video-container" id="reel-video">
+                <button class="close-video">×</button>
+                <?php
+                $embed = trim(get_field('cja_project_video'));
+
+                preg_match('/src="(.+?)"/', $embed, $matches);
+                $src = $matches[1];
+                $params = ['enablejsapi'=> 1];
+
+                $new_src = add_query_arg($params, $src);
+                $embed = str_replace($src, $new_src, $embed);
+                echo $embed;
+                ?>
             </div>
             <section class="project-info">
                 <?php the_content(); ?>

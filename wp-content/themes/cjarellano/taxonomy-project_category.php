@@ -12,13 +12,16 @@ get_header();
             <div class="image" style="background-image: url(<?php echo get_field('cja_project_category_featured_image')['url']; ?>);"></div>
             <div class="container">
                 <p class="lead"><?php echo term_description(); ?></p>
-                <button class="watch-video">
+                <button class="watch-video" data-video-id="reel-video">
                     <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
                     <span class="watch-it">Watch it</span>
-                    <?php echo trim(get_field('cja_project_category_reel')); ?>
                 </button>
             </div>
         </section>
+        <div class="video-container" id="reel-video">
+            <button class="close-video">×</button>
+            <?php echo trim(get_field('cja_project_category_reel')); ?>
+        </div>
         <?php
         query_posts([
             'post_type' => 'project',
@@ -57,10 +60,6 @@ get_header();
             </section>
         <?php endif; ?>
     </main>
-</div>
-
-<div class="video-container">
-    <iframe src="<?php the_field('cja_project_category_reel'); ?>" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
 
 <?php include 'partials/site-footer.php'; ?>
