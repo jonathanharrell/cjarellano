@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="11px" height="21px" viewBox="0 0 11 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-    <title>facebook</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Mobile" transform="translate(-21.000000, -546.000000)" fill="#000000">
+<svg width="25px" height="25px" viewBox="0 0 11 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g class="shape" transform="translate(-21.000000, -546.000000)" fill="#000000">
             <path d="M31.7734515,546.290156 C31.4419779,546.241049 30.3002355,546.142835 28.9743411,546.142835 C26.1997842,546.142835 24.2968801,547.837033 24.2968801,550.943064 L24.2968801,553.619406 L21.166296,553.619406 L21.166296,557.253339 L24.2968801,557.253339 L24.2968801,566.57143 L28.053581,566.57143 L28.053581,557.253339 L31.1718883,557.253339 L31.6506835,553.619406 L28.053581,553.619406 L28.053581,551.299091 C28.053581,550.255563 28.3359474,549.531232 29.8459939,549.531232 L31.7734515,549.531232 L31.7734515,546.290156 Z" id="facebook"></path>
         </g>
     </g>

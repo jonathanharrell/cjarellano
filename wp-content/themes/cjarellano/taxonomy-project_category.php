@@ -43,7 +43,7 @@ get_header();
                     <h2 class="visually-hidden">Selected Projects</h2>
                     <div class="projects">
                         <?php while(have_posts()) : the_post(); ?>
-                            <article class="project">
+                            <article class="project transition-in">
                                 <a href="<?php the_permalink(); ?>"></a>
                                 <div class="project-thumbnail"></div>
                                 <div class="project-info">

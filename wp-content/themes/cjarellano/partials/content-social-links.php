@@ -1,22 +1,22 @@
 <ul class="social-links">
     <li>
         <a href="">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/facebook.svg" alt="Facebook">
+            <?php echo file_get_contents(get_template_directory_uri() . '/img/facebook.svg'); ?>
         </a>
     </li>
     <li>
         <a href="">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/twitter.svg" alt="Twitter">
+            <?php echo file_get_contents(get_template_directory_uri() . '/img/twitter.svg'); ?>
         </a>
     </li>
     <li>
         <a href="">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/instagram.svg" alt="Instagram">
+            <?php echo file_get_contents(get_template_directory_uri() . '/img/instagram.svg'); ?>
         </a>
     </li>
     <li>
         <a href="">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/linkedin.svg" alt="LinkedIn">
+            <?php echo file_get_contents(get_template_directory_uri() . '/img/linkedin.svg'); ?>
         </a>
     </li>
 </ul>

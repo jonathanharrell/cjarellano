@@ -20,6 +20,12 @@
   --cyan: hsl(180, 100%, 50%);
   --green: hsl(120, 100%, 50%);
 
+  /* semantic palette */
+  --color-primary: var(--pink);
+  --color-success: var(--green);
+  --color-warning: var(--pink);
+  --color-error: var(--pink);
+
   /* applied colors */
   --text-color: var(--gray-darkest);
   --border-color: var(--gray-darkest);

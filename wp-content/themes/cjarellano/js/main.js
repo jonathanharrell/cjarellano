@@ -1,4 +1,4 @@
-import Video from './Video'
+import { isInViewport } from './helpers';
 
 // fade in
 const fadeInElement = el => {
@@ -17,39 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (watchVideo) fadeInElement(watchVideo)
 })
 
-// mobile menu
-const menuOpen = document.querySelector('.menu-mobile-open')
-
-if (menuOpen) {
-    menuOpen.addEventListener('click', () => {
-        document.querySelector('body').classList.add('menu-mobile-visible')
-    })
-}
-
-const menuClose = document.querySelector('.menu-mobile-close')
-
-if (menuClose) {
-    menuClose.addEventListener('click', () => {
-        document.querySelector('body').classList.remove('menu-mobile-visible')
-    })
-}
-
-// home page hover
-document.querySelectorAll('.home nav a').forEach(link => {
-    link.addEventListener('mouseover', event => {
-        const linkClass = event.target.className
-        document.querySelector('body').classList.add(`${linkClass}-hover`)
+document.addEventListener('scroll', () => {
+    document.querySelectorAll('.project').forEach(project => {
+        if (isInViewport(project, 0.75) && !project.classList.contains('visible')) {
+            project.classList.add('visible')
+        }
     })
 
-    link.addEventListener('mouseout', event => {
-        const linkClass = event.target.className
-        document.querySelector('body').classList.remove(`${linkClass}-hover`)
-    })
+    const siteFooter = document.querySelector('.site-footer')
+    if (siteFooter) {
+        if (isInViewport(siteFooter, 0.85) && !siteFooter.classList.contains('visible')) {
+            siteFooter.classList.add('visible')
+        }
+    }
 })
-
-// video
-const videos = document.querySelectorAll('.watch-video')
-for (let i = 0; i < videos.length; i++) {
-    const video = new Video(videos[i])
-    video.init()
-}

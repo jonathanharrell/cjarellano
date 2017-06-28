@@ -16,6 +16,14 @@
 
 .project {
   position: relative;
+  opacity: 0;
+  transform: translateY(5rem);
+  transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out 0.1s;
+  will-change: opacity, transform;
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   @media (--tablet) {
     flex-basis: calc(50% - 2rem);
     margin: 0 1rem 2rem;
@@ -48,6 +56,7 @@
       height: 100%;
       padding: 1rem;
       transition: background-color var(--speed) var(--easing);
+      will-change: background-color;
     }
   }
   & .project-type {
@@ -75,6 +84,7 @@
         max-width: 0;
         background-color: #fff;
         transition: max-width var(--speed) var(--easing);
+        will-change: max-width;
       }
     }
   }
@@ -82,19 +92,28 @@
     font-size: var(--font-size-small);
     font-weight: var(--medium);
     @media (--desktop) {
-      max-height: 0;
       overflow: hidden;
       margin: 0;
       font-size: var(--font-size-5);
       text-align: center;
       color: #fff;
-      transition: max-height var(--speed) var(--easing);
+      opacity: 0;
+      transition: opacity var(--speed) var(--easing);
+      will-change: opacity;
     }
   }
   &:hover {
     & .project-info {
       @media (--desktop) {
-        background-color: var(--writer-color);
+        @nest .term-writing & {
+          background-color: var(--writer-color);
+        }
+        @nest .term-directing & {
+          background-color: var(--director-color);
+        }
+        @nest .term-editing & {
+          background-color: var(--editor-color);
+        }
       }
     }
     & .project-type::after {
@@ -104,7 +123,7 @@
     }
     & .project-lead {
       @media (--desktop) {
-        max-height: 100px;
+        opacity: 1;
       }
     }
   }

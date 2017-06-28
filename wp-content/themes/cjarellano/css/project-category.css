@@ -110,6 +110,24 @@
   }
 }
 
+.term-directing .watch-video {
+  &::after {
+    border-left-color: var(--director-color);
+  }
+  &:hover .video-lead {
+    color: var(--director-color);
+  }
+}
+
+.term-editing .watch-video {
+  &::after {
+    border-left-color: var(--editor-color);
+  }
+  &:hover .video-lead {
+    color: var(--editor-color);
+  }
+}
+
 .video-lead {
   margin-bottom: 0.25em;
   font-size: var(--font-size-large);
@@ -123,6 +141,18 @@
 .term-writing {
   & .reel .lead {
     color: var(--writer-color);
+  }
+}
+
+.term-directing {
+  & .reel .lead {
+    color: var(--director-color);
+  }
+}
+
+.term-editing {
+  & .reel .lead {
+    color: var(--editor-color);
   }
 }
 

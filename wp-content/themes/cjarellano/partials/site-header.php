@@ -6,11 +6,16 @@
         <span class="band-editor"></span>
     </button>
     <nav class="primary-nav">
-        <a href="<?php echo esc_url(home_url('/writing')); ?>" class="link-writer">Writer</a>
-        <a href="<?php echo esc_url(home_url('/directing')); ?>" class="link-director">Director</a>
-        <a href="<?php echo esc_url(home_url('/editing')); ?>" class="link-editor">Editor</a>
-        <a href="<?php echo esc_url(home_url('/about')); ?>" class="link-about">About</a>
-        <a href="" class="link-email">em</a>
+        <?php
+        wp_nav_menu([
+            'theme_location' => 'primary_nav',
+            'container'      => false,
+            'items_wrap'     => '%3$s'
+        ]);
+        ?>
+<!--        <a href="--><?php //echo esc_url(home_url('/about')); ?><!--" class="link-about">About</a>-->
+<!--        <a href="" class="link-email">em</a>-->
+        <span class="underline"></span>
     </nav>
     <button class="menu-mobile-close">
         <span></span>
