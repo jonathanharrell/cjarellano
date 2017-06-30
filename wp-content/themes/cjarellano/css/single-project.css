@@ -109,6 +109,12 @@
         font-weight: var(--medium);
       }
     }
+    & a {
+      color: var(--text-color);
+      &:Hover {
+        color: var(--link-color);
+      }
+    }
   }
 }
 
