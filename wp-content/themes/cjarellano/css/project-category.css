@@ -56,12 +56,6 @@
     }
   }
   & .watch-video {
-    opacity: 0;
-    transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out, box-shadow 0.2s ease-out;
-    will-change: opacity, transform;
-    &.visible {
-      opacity: 1;
-    }
     @media (--desktop) {
       position: absolute;
       bottom: 33.333%;
@@ -80,6 +74,12 @@
   padding: 1.25rem 1.5rem;
   box-shadow: 0 2px 44px rgba(0, 0, 0, 0.15);
   background-color: #fff !important;
+  opacity: 0;
+  transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  will-change: opacity, transform;
+  &.visible {
+    opacity: 1;
+  }
   &::after {
     position: absolute;
     top: 50%;

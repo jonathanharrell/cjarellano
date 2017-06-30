@@ -5,6 +5,14 @@
     margin-top: 7.5rem;
   }
   & .project-header {
+    opacity: 0;
+    transform: translateX(5rem);
+    transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out 0.1s;
+    will-change: opacity, transform;
+    &.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
     @media (--desktop) {
       float: right;
       position: relative;
@@ -55,6 +63,14 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    opacity: 0;
+    transform: translateY(5rem);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    will-change: opacity, transform;
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
     @media (--desktop) {
       margin: 0;
       padding: 50% 0;
@@ -71,6 +87,14 @@
     }
   }
   & .project-info {
+    opacity: 0;
+    transform: translateY(5rem);
+    transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out 0.1s;
+    will-change: opacity, transform;
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
     @media (--desktop) {
       float: right;
       width: 45%;
@@ -122,6 +146,14 @@
 
 .project-awards {
   margin-top: 3rem;
+  opacity: 0;
+  transform: translateY(5rem);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  will-change: opacity, transform;
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   @media (--desktop) {
     float: left;
     clear: left;

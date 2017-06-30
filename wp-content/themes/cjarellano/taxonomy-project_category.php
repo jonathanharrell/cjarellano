@@ -45,7 +45,7 @@ get_header();
                         <?php while(have_posts()) : the_post(); ?>
                             <article class="project transition-in">
                                 <a href="<?php the_permalink(); ?>"></a>
-                                <div class="project-thumbnail"></div>
+                                <div class="project-thumbnail" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
                                 <div class="project-info">
                                     <h3 class="project-type"><?php the_field('cja_project_type'); ?></h3>
                                     <p class="project-lead"><?php the_excerpt(); ?></p>

@@ -8,15 +8,17 @@ get_header();
 <main class="main-content">
     <article class="single-project-content">
         <div class="container">
-            <header class="project-header">
+            <header class="project-header transition-in">
                 <h1 class="project-title" data-title="<?php the_title(); ?>"><?php the_title(); ?></h1>
                 <p class="project-type"><?php the_field('cja_project_type'); ?></p>
             </header>
             <div class="image-container">
-                <div class="image" style="background-image: url('img/mind-over-marriage.jpg');"></div>
-                <button class="watch-video" data-video-id="reel-video">
-                    <span class="video-lead">Play video</span>
-                </button>
+                <div class="image transition-in" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
+                <?php if(get_field('cja_project_video')) : ?>
+                    <button class="watch-video transition-in" data-video-id="reel-video">
+                        <span class="video-lead">Play video</span>
+                    </button>
+                <?php endif; ?>
             </div>
             <div class="video-container" id="reel-video">
                 <button class="close-video">×</button>
@@ -32,7 +34,7 @@ get_header();
                 echo $embed;
                 ?>
             </div>
-            <section class="project-info">
+            <section class="project-info transition-in">
                 <?php the_content(); ?>
                 <?php
                 $contributions = get_terms('project_category');
@@ -49,7 +51,7 @@ get_header();
                 <?php endif; ?>
             </section>
             <?php if(have_rows('cja_project_award')) : ?>
-                <aside class="project-awards">
+                <aside class="project-awards transition-in">
                     <h2 class="visually-hidden">Awards</h2>
                     <ul>
                         <?php while(have_rows('cja_project_award')) : the_row();

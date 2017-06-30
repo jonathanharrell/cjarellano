@@ -32,55 +32,65 @@
       font-size: 3.5rem;
     }
   }
-  & nav {
-    margin: 0;
-    line-height: 1.2;
-    & a {
-      display: inline-block;
-      position: relative;
-      margin-right: 0.125em;
-      font-size: var(--font-size-1);
-      font-weight: var(--extrabold);
-      transform: scale(1);
-      transition: transform 0.4s var(--easing);
-      will-change: transform;
-      @media (--desktop) {
-        font-size: 3.5rem;
-      }
-      &::before {
-        display: block;
-        position: absolute;
-        top: -0.75rem;
-        left: -1.5rem;
-        z-index: -1;
-        width: calc(100% + 3rem);
-        height: calc(100% + 1.5rem);
-        box-shadow: 0 2px 44px rgba(0, 0, 0, 0.15);
-        background-color: #fff;
-        opacity: 0;
-        transition: opacity 0.4s var(--easing);
-        will-change: opacity;
-        content: '';
-      }
-      &::after {
-        content: '.';
-      }
-      &:hover {
-        @media (--desktop) {
-          z-index: 5;
-          transform: scale(1.04);
-          &::before {
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
   & footer {
     margin-top: auto;
     & a {
       font-weight: var(--semibold);
-      color: var(--gray-dark);
+      color: var(--text-color);
+      &:hover {
+        color: var(--link-color);
+      }
+    }
+  }
+}
+
+.home-nav {
+  margin: 0;
+  line-height: 1.2;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  will-change: opacity;
+  &.visible {
+    opacity: 1;
+  }
+  & a {
+    display: inline-block;
+    position: relative;
+    margin-right: 0.125em;
+    font-size: var(--font-size-1);
+    font-weight: var(--extrabold);
+    transform: scale(1);
+    transition: transform 0.4s var(--easing);
+    will-change: transform;
+    @media (--desktop) {
+      font-size: 3.5rem;
+    }
+    &::before {
+      display: block;
+      position: absolute;
+      top: -0.75rem;
+      left: -1.5rem;
+      z-index: -1;
+      width: calc(100% + 3rem);
+      height: calc(100% + 1.5rem);
+      box-shadow: 0 2px 44px rgba(0, 0, 0, 0.15);
+      background-color: #fff;
+      opacity: 0;
+      transition: opacity 0.4s var(--easing);
+      will-change: opacity;
+      content: '';
+    }
+    &::after {
+      content: '.';
+    }
+    &:hover {
+      @media (--desktop) {
+        z-index: 5;
+        transform: scale(1.04);
+        &::before {
+          opacity: 1;
+        }
+      }
     }
   }
 }

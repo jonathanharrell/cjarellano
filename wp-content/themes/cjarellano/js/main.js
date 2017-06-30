@@ -1,5 +1,5 @@
 import Video from './Video'
-import { isInViewport } from './helpers';
+import { isInViewport } from './helpers'
 
 // fade in
 const fadeInElement = el => {
@@ -8,14 +8,30 @@ const fadeInElement = el => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const siteHeader = document.querySelector('.site-header')
+
+    const homeNav = document.querySelector('.home-nav')
+
     const reelImage = document.querySelector('.reel .image')
     const reelLead = document.querySelector('.reel .lead')
-    const watchVideo = document.querySelector('.reel .watch-video')
+    const watchVideo = document.querySelector('.watch-video')
+
+    const projectImage = document.querySelector('.single-project-content .image')
+    const projectHeader = document.querySelector('.project-header')
+    const projectInfo = document.querySelector('.project-info')
+    const projectAwards = document.querySelector('.project-awards')
 
     if (siteHeader) fadeInElement(siteHeader)
+
+    if (homeNav) fadeInElement(homeNav)
+
     if (reelImage) fadeInElement(reelImage)
     if (reelLead) fadeInElement(reelLead)
     if (watchVideo) fadeInElement(watchVideo)
+
+    if (projectImage) fadeInElement(projectImage)
+    if (projectHeader) fadeInElement(projectHeader)
+    if (projectInfo) fadeInElement(projectInfo)
+    if (projectAwards) fadeInElement(projectAwards)
 })
 
 document.addEventListener('scroll', () => {

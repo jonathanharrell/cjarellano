@@ -1,5 +1,8 @@
 <?php
 
+// Enable feature images
+add_theme_support('post-thumbnails');
+
 // Remove p tags from category description
 remove_filter('term_description','wpautop');
 
