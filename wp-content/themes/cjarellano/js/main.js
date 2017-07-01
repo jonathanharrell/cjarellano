@@ -101,36 +101,40 @@ window.addEventListener('resize', () => {
     positionMenuUnderline()
 })
 
-document.querySelectorAll('.primary-nav .menu-item').forEach(menuItem => {
-    menuItem.addEventListener('mouseover', event => {
-        hoveringMenuItem = true
-        underline.classList.add('visible')
+const menuItems = document.querySelectorAll('.primary-nav .menu-item')
 
-        const { target } = event
-        const positionLeft = target.getBoundingClientRect().left
-        const width = target.offsetWidth
+if (menuItems) {
+    menuItems.forEach(menuItem => {
+        menuItem.addEventListener('mouseover', event => {
+            hoveringMenuItem = true
+            underline.classList.add('visible')
 
-        underline.style.left = `${positionLeft}px`
-        underline.style.width = `${width}px`
-    })
+            const { target } = event
+            const positionLeft = target.getBoundingClientRect().left
+            const width = target.offsetWidth
 
-    menuItem.addEventListener('mouseout', event => {
-        hoveringMenuItem = false
+            underline.style.left = `${positionLeft}px`
+            underline.style.width = `${width}px`
+        })
 
-        setTimeout(() => {
-            if (!hoveringMenuItem) {
-                if (!event.relatedTarget.classList.contains('menu-item')) {
-                    if (startingPositionLeft && startingWidth) {
-                        underline.style.left = `${startingPositionLeft}px`
-                        underline.style.width = `${startingWidth}px`
-                    } else {
-                        underline.classList.remove('visible')
+        menuItem.addEventListener('mouseout', event => {
+            hoveringMenuItem = false
+
+            setTimeout(() => {
+                if (!hoveringMenuItem) {
+                    if (!event.relatedTarget.classList.contains('menu-item')) {
+                        if (startingPositionLeft && startingWidth) {
+                            underline.style.left = `${startingPositionLeft}px`
+                            underline.style.width = `${startingWidth}px`
+                        } else {
+                            underline.classList.remove('visible')
+                        }
                     }
                 }
-            }
-        }, 350)
+            }, 350)
+        })
     })
-})
+}
 
 // videos
 const videos = document.querySelectorAll('.watch-video')

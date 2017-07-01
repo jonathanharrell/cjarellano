@@ -1,3 +1,4 @@
+import { debounce } from 'underscore'
 import CJAVimeoPlayer from './CJAVimeoPlayer'
 import CJAYouTubePlayer from './CJAYouTubePlayer'
 
@@ -67,7 +68,9 @@ export default class Video {
         if (this.type === 'youtube') this.player = new CJAYouTubePlayer(this.iframe)
 
         this.player.init()
-        this.player.onVideoEnd = () => this.closeModal()
+        this.player.onVideoEnd = () => {
+            this.closeModal()
+        }
     }
 
     play () {
