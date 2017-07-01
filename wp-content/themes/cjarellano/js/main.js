@@ -35,14 +35,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (projectAwards) fadeInElement(projectAwards)
 })
 
-document.addEventListener('scroll', debounce(() => {
-    document.querySelectorAll('.project').forEach(project => {
-        if (isInViewport(project, 0.75) && !project.classList.contains('visible')) {
-            project.classList.add('visible')
-        }
-    })
+// project transitions
+const projects = document.querySelectorAll('.project')
 
-    const siteFooter = document.querySelector('.site-footer')
+if (projects) {
+    document.addEventListener('scroll', debounce(() => {
+        document.querySelectorAll('.project').forEach(project => {
+            if (isInViewport(project, 0.75) && !project.classList.contains('visible')) {
+                project.classList.add('visible')
+            }
+        })
+    }, 10))
+}
+
+// footer transition
+const siteFooter = document.querySelector('.site-footer')
+
+document.addEventListener('scroll', debounce(() => {
     if (siteFooter) {
         if (isInViewport(siteFooter, 0.85) && !siteFooter.classList.contains('visible')) {
             siteFooter.classList.add('visible')
