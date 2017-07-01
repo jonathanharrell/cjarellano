@@ -80,37 +80,51 @@ get_header();
             <?php endif; ?>
         </div>
     </article>
-    <section class="related-projects">
-        <div class="container">
-            <h2 class="visually-hidden">Related Projects</h2>
-            <div class="projects">
-                <article class="project">
-                    <a href=""></a>
-                    <div class="project-thumbnail"></div>
-                    <div class="project-info">
-                        <h3 class="project-type">Feature Screenplay</h3>
-                        <p class="project-lead">Teen rom com with a heist-y twist</p>
-                    </div>
-                </article>
-                <article class="project">
-                    <a href=""></a>
-                    <div class="project-thumbnail"></div>
-                    <div class="project-info">
-                        <h3 class="project-type">Commercial Parody</h3>
-                        <p class="project-lead">Project lead</p>
-                    </div>
-                </article>
-                <article class="project">
-                    <a href=""></a>
-                    <div class="project-thumbnail"></div>
-                    <div class="project-info">
-                        <h3 class="project-type">Commercial Parody</h3>
-                        <p class="project-lead">Project lead</p>
-                    </div>
-                </article>
+    <?php
+    $categories = get_terms('project_category');
+    $categoryIds = [];
+
+    foreach($categories as $category) {
+        array_push($categoryIds, $category->term_id);
+    }
+
+    query_posts([
+        'post_type' => 'project',
+        'posts_per_page' => 3,
+        'orderby' => 'rand',
+        'order' => 'ASC',
+        'tax_query' => [
+            [
+                'taxonomy' => 'project_category',
+                'field'    => 'id',
+                'terms'    => $categoryIds,
+            ]
+        ],
+        'post__not_in' => array(get_the_ID())
+    ]);
+
+    if(have_posts()) : ?>
+        <section class="related-projects">
+            <div class="container">
+                <h2 class="visually-hidden">Related Projects</h2>
+                <div class="projects">
+                    <?php while(have_posts()) : the_post(); ?>
+                        <article class="project transition-in">
+                            <a href="<?php the_permalink(); ?>"></a>
+                            <div class="project-thumbnail" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
+                            <div class="project-info">
+                                <h3 class="project-type"><?php the_field('cja_project_type'); ?></h3>
+                                <p class="project-lead"><?php the_excerpt(); ?></p>
+                            </div>
+                        </article>
+                        <?php
+                    endwhile;
+                    wp_reset_query();
+                    ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
 </main>
 
 <?php include 'partials/site-footer.php'; ?>
