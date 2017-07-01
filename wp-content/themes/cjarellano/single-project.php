@@ -37,7 +37,7 @@ get_header();
             <section class="project-info transition-in">
                 <?php the_content(); ?>
                 <?php
-                $contributions = get_terms('project_category');
+                $contributions = get_the_terms($post, 'project_category');
                 if($contributions) :
                     ?>
                     <ul class="project-contributions">
