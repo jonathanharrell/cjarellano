@@ -67,6 +67,12 @@ if (menuClose) {
     })
 }
 
+window.addEventListener('resize', () => {
+    if(window.innerWidth >= 960) {
+        document.querySelector('body').classList.remove('menu-mobile-visible')
+    }
+})
+
 // desktop menu hover
 const underline = document.querySelector('.underline')
 
