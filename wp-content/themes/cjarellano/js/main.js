@@ -77,7 +77,7 @@ if (menuClose) {
 }
 
 window.addEventListener('resize', () => {
-    if(window.innerWidth >= 960) {
+    if (window.innerWidth >= 960) {
         document.querySelector('body').classList.remove('menu-mobile-visible')
     }
 })

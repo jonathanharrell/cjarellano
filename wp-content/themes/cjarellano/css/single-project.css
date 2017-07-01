@@ -111,7 +111,7 @@
     }
     & a {
       color: var(--text-color);
-      &:Hover {
+      &:hover {
         color: var(--link-color);
       }
     }
