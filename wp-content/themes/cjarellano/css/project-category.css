@@ -49,10 +49,16 @@
       position: absolute;
       top: -8.75rem;
       left: 40%;
-      width: 80rem;
+      width: 60%;
+      height: 22rem;
+      overflow: hidden;
       font-size: 10rem;
       line-height: 1.05;
       mix-blend-mode: multiply;
+      & span {
+        position: absolute;
+        width: 100vw;
+      }
     }
   }
   & .watch-video {

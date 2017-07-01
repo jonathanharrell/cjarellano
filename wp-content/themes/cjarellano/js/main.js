@@ -1,3 +1,4 @@
+import { debounce } from 'underscore'
 import Video from './Video'
 import { isInViewport } from './helpers'
 
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (projectAwards) fadeInElement(projectAwards)
 })
 
-document.addEventListener('scroll', () => {
+document.addEventListener('scroll', debounce(() => {
     document.querySelectorAll('.project').forEach(project => {
         if (isInViewport(project, 0.75) && !project.classList.contains('visible')) {
             project.classList.add('visible')
@@ -47,14 +48,13 @@ document.addEventListener('scroll', () => {
             siteFooter.classList.add('visible')
         }
     }
-})
+}, 10))
 
 // mobile menu
 const menuOpen = document.querySelector('.menu-mobile-open')
 
 if (menuOpen) {
     menuOpen.addEventListener('click', () => {
-        console.log('test')
         document.querySelector('body').classList.add('menu-mobile-visible')
     })
 }

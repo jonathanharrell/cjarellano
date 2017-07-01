@@ -1,20 +1,16 @@
 /* stylelint-disable */
-@import "../node_modules/hiq/dist/hiq.css";
+@import '../node_modules/hiq/dist/hiq.css';
 /* stylelint-enable */
 
-@import "fonts.css";
-@import "variables.css";
-@import "header.css";
-@import "footer.css";
-@import "video.css";
-@import "project-category.css";
-@import "projects.css";
-@import "home.css";
-@import "single-project.css";
-
-body {
-  overflow-x: hidden;
-}
+@import 'fonts.css';
+@import 'variables.css';
+@import 'header.css';
+@import 'footer.css';
+@import 'video.css';
+@import 'project-category.css';
+@import 'projects.css';
+@import 'home.css';
+@import 'single-project.css';
 
 .main-content {
   margin-top: 56px;

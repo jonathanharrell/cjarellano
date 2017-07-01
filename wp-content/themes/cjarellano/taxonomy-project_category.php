@@ -11,7 +11,9 @@ get_header();
             <h1 class="visually-hidden">Writer</h1>
             <div class="image transition-in" style="background-image: url(<?php echo get_field('cja_project_category_featured_image')['url']; ?>);"></div>
             <div class="container">
-                <p class="lead transition-in"><?php echo term_description(); ?></p>
+                <p class="lead transition-in">
+                    <span><?php echo term_description(); ?></span>
+                </p>
                 <button class="watch-video transition-in" data-video-id="reel-video">
                     <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
                     <span class="watch-it">Watch it</span>

@@ -1,6 +1,6 @@
 :root {
   /* fonts */
-  --font-family-sans-serif: "Sharp Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --font-family-sans-serif: 'Sharp Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 
   /* font sizes */
   --max-font-size: 1rem;
@@ -52,7 +52,7 @@
     &::after {
       display: table;
       clear: both;
-      content: "";
+      content: '';
     }
   };
 

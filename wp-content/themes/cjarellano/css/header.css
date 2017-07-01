@@ -89,11 +89,11 @@
     height: 3px;
     background-color: var(--color-primary);
     opacity: 0;
-    transition: left 0.2s var(--easing) 0.05s, width 0.2s cubic-bezier(0, 0, 0.5, 1.75) var(--speed), opacity var(--speed) var(--easing) 0.2s;
-    will-change: left, width, opacity;
     &.visible {
       @media (--desktop) {
         opacity: 1;
+        transition: left 0.2s var(--easing) 0.05s, width 0.2s cubic-bezier(0, 0, 0.5, 1.75) var(--speed), opacity var(--speed) var(--easing) 0.2s;
+        will-change: left, width, opacity;
       }
     }
   }
@@ -110,6 +110,7 @@
   position: absolute;
   top: 16px;
   right: var(--container-horizontal-padding);
+  width: 24px;
   min-width: 24px;
   height: 24px;
   min-height: 24px;
