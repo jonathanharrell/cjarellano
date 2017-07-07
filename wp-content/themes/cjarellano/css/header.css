@@ -10,14 +10,10 @@
   height: 56px;
   padding: 1rem var(--container-horizontal-padding);
   background: #fff;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  will-change: opacity;
-  &.visible {
-    opacity: 1;
-  }
   @media (--desktop) {
     height: 75px;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 }
 
@@ -103,36 +99,60 @@
   @apply --all-caps;
 }
 
-.menu-mobile-open {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+.logo {
   position: absolute;
-  top: 16px;
   right: var(--container-horizontal-padding);
-  width: 24px;
-  min-width: 24px;
-  height: 24px;
-  min-height: 24px;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  transform: rotate(-90deg);
-  transition: top var(--speed) var(--easing) 0.1s, right var(--speed) var(--easing), min-width var(--speed) var(--easing), min-height var(--speed) var(--easing), transform var(--speed) var(--easing) 0.1s;
-  will-change: top, right, min-width, min-height, transform;
+  width: 40px;
   @media (--desktop) {
     position: absolute;
     left: 50%;
-    min-width: 42px;
-    height: 42px;
-    min-height: 42px;
-    transform: rotate(-90deg) translateY(-50%);
-    pointer-events: none;
+    width: 60px;
+    transform: translateX(-50%);
   }
-  & span {
-    flex: 1;
-    transition: all var(--speed) var(--easing) 0.2s;
+  & svg {
+    width: 100%;
   }
+  & #yellow,
+  & #pink,
+  & #cyan {
+    will-change: transform;
+    animation-fill-mode: backwards;
+  }
+  & #yellow {
+    animation: rotateOut 0.5s ease-out;
+    transform-origin: 50%;
+  }
+  & #pink {
+    animation: rotateOut 0.4s ease-out;
+    transform-origin: 2% 50%;
+  }
+  & #cyan {
+    animation: rotateOut 0.3s ease-out;
+    transform-origin: 50%;
+  }
+  &:hover {
+    cursor: pointer;
+    & #yellow {
+      animation: rotateIn 1.5s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
+      animation-direction: normal, reverse;
+    }
+    & #pink {
+      animation: rotateIn 1s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
+    }
+    & #cyan {
+      animation: rotateIn 0.5s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
+    }
+  }
+}
+
+@keyframes rotateIn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateOut {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }
 
 .menu-mobile-close {

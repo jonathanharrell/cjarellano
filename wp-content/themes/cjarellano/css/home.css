@@ -47,12 +47,6 @@
 .home-nav {
   margin: 0;
   line-height: 1.2;
-  opacity: 0;
-  transition: opacity 0.3s ease-out;
-  will-change: opacity;
-  &.visible {
-    opacity: 1;
-  }
   & a {
     display: inline-block;
     position: relative;
@@ -128,6 +122,13 @@ body {
   @media (--desktop) {
     background-color: var(--writer-color);
     background-image: url('../img/triangles.svg');
+    & .home-nav a {
+      color: color(var(--writer-color) shade(25%)) !important;
+      opacity: 0.75;
+    }
+    & .writer-link {
+      opacity: 1 !important;
+    }
   }
 }
 
@@ -135,6 +136,13 @@ body {
   @media (--desktop) {
     background-color: var(--director-color);
     background-image: url('../img/circles.svg');
+    & .home-nav a {
+      color: color(var(--director-color) shade(25%)) !important;
+      opacity: 0.75;
+    }
+    & .director-link {
+      opacity: 1 !important;
+    }
   }
 }
 
@@ -142,6 +150,13 @@ body {
   @media (--desktop) {
     background-color: var(--editor-color);
     background-image: url('../img/diamonds.svg');
+    & .home-nav a {
+      color: color(var(--editor-color) shade(25%)) !important;
+      opacity: 0.75;
+    }
+    & .editor-link {
+      opacity: 1 !important;
+    }
   }
 }
 

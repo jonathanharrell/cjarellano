@@ -1,12 +1,6 @@
 .site-footer {
   margin: 7.5rem 0 3rem;
   text-align: center;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  will-change: opacity;
-  &.visible {
-    opacity: 1;
-  }
   @media (--desktop) {
     margin: 10rem 0 5rem;
   }

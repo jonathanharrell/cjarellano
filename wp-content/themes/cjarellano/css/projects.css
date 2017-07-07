@@ -16,16 +16,8 @@
 
 .project {
   position: relative;
-  opacity: 0;
-  transform: translateY(5rem);
-  transition: opacity 0.2s ease-out 0.1s, transform 0.2s ease-out 0.1s, background-color var(--speed) var(--easing);
-  will-change: opacity, transform;
   @media (--desktop) {
     background-color: var(--gray-darkest);
-  }
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
   }
   @media (--tablet) {
     flex-basis: calc(50% - 2rem);

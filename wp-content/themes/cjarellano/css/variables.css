@@ -17,11 +17,11 @@
   --gray-darkest: hsl(0, 0%, 0%);
   --pink: hsl(300, 100%, 50%);
   --cyan: hsl(180, 100%, 50%);
-  --green: hsl(120, 100%, 50%);
+  --yellow: hsl(55, 94%, 54%);
 
   /* semantic palette */
   --color-primary: var(--pink);
-  --color-success: var(--green);
+  --color-success: var(--cyan);
   --color-warning: var(--pink);
   --color-error: var(--pink);
 
@@ -30,7 +30,7 @@
   --border-color: var(--gray-darkest);
   --writer-color: var(--pink);
   --director-color: var(--cyan);
-  --editor-color: var(--green);
+  --editor-color: var(--yellow);
 
   /* border-radius */
   --border-radius: 0;

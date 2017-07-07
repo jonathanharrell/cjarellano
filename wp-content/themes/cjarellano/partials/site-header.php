@@ -1,10 +1,8 @@
 <header class="site-header transition-in">
     <a href="<?php echo esc_url(home_url('/')); ?>" class="brand">C.J. Arellano</a>
-    <button class="menu-mobile-open">
-        <span class="band-writer"></span>
-        <span class="band-director"></span>
-        <span class="band-editor"></span>
-    </button>
+    <div class="logo">
+        <?php echo file_get_contents(get_template_directory_uri() . '/img/logo.svg'); ?>
+    </div>
     <nav class="primary-nav">
         <?php
         wp_nav_menu([

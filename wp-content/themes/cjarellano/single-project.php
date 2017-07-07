@@ -8,14 +8,14 @@ get_header();
 <main class="main-content">
     <article class="single-project-content">
         <div class="container">
-            <header class="project-header transition-in">
+            <header class="project-header">
                 <h1 class="project-title" data-title="<?php the_title(); ?>"><?php the_title(); ?></h1>
                 <p class="project-type"><?php the_field('cja_project_type'); ?></p>
             </header>
             <div class="image-container">
-                <div class="image transition-in" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
+                <div class="image" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
                 <?php if(get_field('cja_project_video')) : ?>
-                    <button class="watch-video transition-in" data-video-id="reel-video">
+                    <button class="watch-video" data-video-id="reel-video">
                         <span class="video-lead">Play video</span>
                     </button>
                 <?php endif; ?>
@@ -34,7 +34,7 @@ get_header();
                 echo $embed;
                 ?>
             </div>
-            <section class="project-info transition-in">
+            <section class="project-info">
                 <?php the_content(); ?>
                 <?php
                 $contributions = get_the_terms($post, 'project_category');
@@ -68,7 +68,7 @@ get_header();
                 </section>
             <?php endif; ?>
             <?php if(have_rows('cja_project_award')) : ?>
-                <section class="project-awards transition-in">
+                <section class="project-awards">
                     <ul>
                         <?php while(have_rows('cja_project_award')) : the_row();
                             $source = get_sub_field('source');
@@ -133,7 +133,7 @@ get_header();
                 <h2>Related Projects</h2>
                 <div class="projects">
                     <?php while(have_posts()) : the_post(); ?>
-                        <article class="project transition-in">
+                        <article class="project">
                             <a href="<?php the_permalink(); ?>"></a>
                             <div class="project-thumbnail" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
                             <div class="project-info">

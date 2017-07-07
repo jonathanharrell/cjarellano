@@ -9,12 +9,12 @@ get_header();
     <main class="main-content">
         <section class="reel">
             <h1 class="visually-hidden">Writer</h1>
-            <div class="image transition-in" style="background-image: url(<?php echo get_field('cja_project_category_featured_image')['url']; ?>);"></div>
+            <div class="image" style="background-image: url(<?php echo get_field('cja_project_category_featured_image')['url']; ?>);"></div>
             <div class="container">
-                <p class="lead transition-in">
+                <p class="lead">
                     <span><?php echo term_description(); ?></span>
                 </p>
-                <button class="watch-video transition-in" data-video-id="reel-video">
+                <button class="watch-video" data-video-id="reel-video">
                     <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
                     <span class="watch-it">Watch it</span>
                 </button>
@@ -45,7 +45,7 @@ get_header();
                     <h2 class="visually-hidden">Selected Projects</h2>
                     <div class="projects">
                         <?php while(have_posts()) : the_post(); ?>
-                            <article class="project transition-in">
+                            <article class="project">
                                 <a href="<?php the_permalink(); ?>"></a>
                                 <div class="project-thumbnail" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
                                 <div class="project-info">
