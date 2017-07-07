@@ -50,9 +50,25 @@ get_header();
                     </ul>
                 <?php endif; ?>
             </section>
+            <?php if(have_rows('cja_project_award') || have_rows('cja_project_quote')) : ?>
+                <h2 class="more-about-title">More about <?php the_title(); ?></h2>
+            <?php endif; ?>
+            <?php if(have_rows('cja_project_quote')) : ?>
+                <section class="project-quotes">
+                    <?php while(have_rows('cja_project_quote')) : the_row(); ?>
+                        <div class="project-quote">
+                            <blockquote>
+                                <?php the_sub_field('quote'); ?>
+                                <?php if(get_sub_field('source')) : ?>
+                                    <cite><?php the_sub_field('source'); ?></cite>
+                                <?php endif; ?>
+                            </blockquote>
+                        </div>
+                    <?php endwhile; ?>
+                </section>
+            <?php endif; ?>
             <?php if(have_rows('cja_project_award')) : ?>
-                <aside class="project-awards transition-in">
-                    <h2 class="visually-hidden">Awards</h2>
+                <section class="project-awards transition-in">
                     <ul>
                         <?php while(have_rows('cja_project_award')) : the_row();
                             $source = get_sub_field('source');
@@ -76,7 +92,15 @@ get_header();
                             </li>
                         <?php endwhile; ?>
                     </ul>
-                </aside>
+                </section>
+            <?php endif; ?>
+            <?php if(get_field('cja_project_excerpt')) : ?>
+                <section class="project-excerpt">
+                    <h2>Excerpt</h2>
+                    <div class="project-excerpt-text">
+                        <?php the_field('cja_project_excerpt'); ?>
+                    </div>
+                </section>
             <?php endif; ?>
         </div>
     </article>
@@ -106,7 +130,7 @@ get_header();
     if(have_posts()) : ?>
         <section class="related-projects">
             <div class="container">
-                <h2 class="visually-hidden">Related Projects</h2>
+                <h2>Related Projects</h2>
                 <div class="projects">
                     <?php while(have_posts()) : the_post(); ?>
                         <article class="project transition-in">
