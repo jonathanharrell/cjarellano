@@ -44,3 +44,14 @@ img {
     }
   }
 }
+
+.not-found {
+  margin: 5rem 0;
+  text-align: center;
+  @media (--desktop) {
+    margin-top: 10rem;
+  }
+  & h1 {
+    font-weight: var(--bold);
+  }
+}
