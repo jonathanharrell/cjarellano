@@ -11,7 +11,8 @@ module.exports = {
         main: [
             './js/main.js',
             './css/main.css'
-        ]
+        ],
+        vendor: ['@vimeo/player', 'gsap', 'scrollmagic', 'underscore', 'youtube-player']
     },
 
     output: {
@@ -59,7 +60,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'eslint-loader',
                 enforce: 'pre',
-                exclude: /node_modules/
+                exclude: [/node_modules/, /modernizr.js/]
             },
 
             {
@@ -68,6 +69,16 @@ module.exports = {
                 loader: 'babel-loader'
             }
         ]
+    },
+
+    resolve: {
+        alias: {
+            'TweenMax': path.resolve('node_modules', 'gsap/src/uncompressed/TweenMax.js'),
+            'TimelineMax': path.resolve('node_modules', 'gsap/src/uncompressed/TimelineMax.js'),
+            'ScrollMagic': path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'),
+            'animation.gsap': path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js'),
+            'debug.addIndicators': path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js')
+        }
     },
 
     plugins: [
@@ -81,6 +92,11 @@ module.exports = {
 
         new StyleLintPlugin({
             files: ['**/*.css']
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            filename: 'vendor.js'
         }),
 
         new webpack.LoaderOptionsPlugin({

@@ -27,6 +27,7 @@ get_header();
                     </div>
                     <?php if (have_rows('cja_about_quote')) : ?>
                         <section class="about-quotes">
+                            <span class="line"></span>
                             <?php while (have_rows('cja_about_quote')) : the_row(); ?>
                                 <div class="quote about-quote">
                                     <blockquote>

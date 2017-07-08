@@ -9,11 +9,15 @@ get_header();
     <article class="single-project-content">
         <div class="container">
             <header class="project-header">
-                <h1 class="project-title" data-title="<?php the_title(); ?>"><?php the_title(); ?></h1>
+                <h1 class="project-title" data-title="<?php the_title(); ?>">
+                    <?php the_title(); ?>
+                </h1>
                 <p class="project-type"><?php the_field('cja_project_type'); ?></p>
             </header>
             <div class="image-container">
-                <div class="image" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
+                <div class="image responsive-image">
+                    <?php the_post_thumbnail(); ?>
+                </div>
                 <?php if(get_field('cja_project_video')) : ?>
                     <button class="watch-video" data-video-id="reel-video">
                         <span class="video-lead">Play video</span>
@@ -135,7 +139,9 @@ get_header();
                     <?php while(have_posts()) : the_post(); ?>
                         <article class="project">
                             <a href="<?php the_permalink(); ?>"></a>
-                            <div class="project-thumbnail" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
+                            <div class="project-thumbnail responsive-image">
+                                <?php the_post_thumbnail(); ?>
+                            </div>
                             <div class="project-info">
                                 <h3 class="project-type"><?php the_field('cja_project_type'); ?></h3>
                                 <p class="project-lead"><?php the_excerpt(); ?></p>

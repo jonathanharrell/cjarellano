@@ -9,7 +9,12 @@ get_header();
     <main class="main-content">
         <section class="reel">
             <h1 class="visually-hidden">Writer</h1>
-            <div class="image" style="background-image: url(<?php echo get_field('cja_project_category_featured_image')['url']; ?>);"></div>
+            <div class="image responsive-image">
+                <?php
+                $image = get_field('cja_project_category_featured_image');
+                echo wp_get_attachment_image($image['id'], 'full');
+                ?>
+            </div>
             <div class="container">
                 <p class="lead">
                     <span><?php echo term_description(); ?></span>
@@ -47,7 +52,9 @@ get_header();
                         <?php while(have_posts()) : the_post(); ?>
                             <article class="project">
                                 <a href="<?php the_permalink(); ?>"></a>
-                                <div class="project-thumbnail" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
+                                <div class="project-thumbnail responsive-image">
+                                    <?php the_post_thumbnail(); ?>
+                                </div>
                                 <div class="project-info">
                                     <h3 class="project-type"><?php the_field('cja_project_type'); ?></h3>
                                     <p class="project-lead"><?php the_excerpt(); ?></p>

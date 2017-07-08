@@ -130,8 +130,6 @@
   width: 100%;
   margin-bottom: 1rem;
   padding: 30% 0;
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: auto 110%;
   transition: opacity var(--speed) var(--easing), background-size 0.3s var(--easing);
   @media (--desktop) {

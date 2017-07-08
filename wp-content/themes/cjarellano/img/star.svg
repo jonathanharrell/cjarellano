@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-    <title>star-border - MaterialIcons-Regular</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
+<svg width="20px" height="19px" viewBox="0 0 20 19" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Desktop-HD-Copy-9" transform="translate(-240.000000, -1266.000000)" fill="#000000">
             <path d="M250,1279.42188 L253.75,1281.67188 L252.765625,1277.40625 L256.09375,1274.5 L251.6875,1274.125 L250,1270.09375 L248.3125,1274.125 L243.90625,1274.5 L247.234375,1277.40625 L246.25,1281.67188 L250,1279.42188 Z M259.984375,1273.23438 L254.546875,1277.96875 L256.1875,1285 L250,1281.25 L243.8125,1285 L245.453125,1277.96875 L240.015625,1273.23438 L247.1875,1272.625 L250,1266.01562 L252.8125,1272.625 L259.984375,1273.23438 Z" id="star-border---MaterialIcons-Regular" style="mix-blend-mode: multiply;"></path>

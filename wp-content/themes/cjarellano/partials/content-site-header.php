@@ -11,11 +11,9 @@
             'items_wrap'     => '%3$s'
         ]);
         ?>
-<!--        <a href="" class="link-email">em</a>-->
-        <span class="underline"></span>
+        <a href="mailto:cj@cjarellano.com" class="link-email">
+            <?php echo file_get_contents(get_template_directory_uri() . '/img/email.svg'); ?>
+        </a>
     </nav>
-    <button class="menu-mobile-close">
-        <span></span>
-        <span></span>
-    </button>
+    <span class="menu-mobile-background"></span>
 </header>

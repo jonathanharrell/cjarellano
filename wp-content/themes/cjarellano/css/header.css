@@ -10,11 +10,23 @@
   height: 56px;
   padding: 1rem var(--container-horizontal-padding);
   background: #fff;
+  transition: box-shadow var(--speed) var(--easing), transform var(--speed) var(--easing);
+  will-change: transform;
   @media (--desktop) {
     height: 75px;
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
   }
+}
+
+.scrolled {
+  & .site-header {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.scrolling-down .site-header {
+  transform: translateY(-100%);
 }
 
 .brand:hover {
@@ -31,6 +43,7 @@
   opacity: 0;
   transition-delay: 0s;
   @media (--desktop) {
+    display: flex;
     visibility: visible;
     position: static;
     width: auto;
@@ -40,14 +53,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 33.333vh;
+    width: 100%;
     @media (--desktop) {
       display: inline-block;
-      height: auto;
     }
     &:not(:last-child) {
       @media (--desktop) {
-        margin-right: 1rem;
+        margin-right: 1.75rem;
       }
     }
     &.current-menu-item a {
@@ -64,32 +76,20 @@
     }
   }
   & a {
+    width: 100%;
+    padding: 0.5rem 0;
     font-size: var(--font-size-2);
+    text-align: center;
     font-weight: var(--extrabold);
     color: #fff;
     @media (--desktop) {
       @apply --all-caps;
+      padding: 0;
     }
     &:hover {
       color: #fff;
       @media (--desktop) {
         color: var(--color-primary);
-      }
-    }
-  }
-  & .underline {
-    display: block;
-    position: absolute;
-    bottom: 15px;
-    width: 60px;
-    height: 3px;
-    background-color: var(--color-primary);
-    opacity: 0;
-    &.visible {
-      @media (--desktop) {
-        opacity: 1;
-        transition: left 0.2s var(--easing) 0.05s, width 0.2s cubic-bezier(0, 0, 0.5, 1.75) var(--speed), opacity var(--speed) var(--easing) 0.2s;
-        will-change: left, width, opacity;
       }
     }
   }
@@ -101,10 +101,15 @@
 
 .logo {
   position: absolute;
+  top: 50%;
   right: var(--container-horizontal-padding);
+  z-index: 15;
   width: 40px;
+  transform: translateY(-50%);
+  cursor: pointer;
   @media (--desktop) {
     position: absolute;
+    top: 10px;
     left: 50%;
     width: 60px;
     transform: translateX(-50%);
@@ -130,17 +135,19 @@
     animation: rotateOut 0.3s ease-out;
     transform-origin: 50%;
   }
-  &:hover {
-    cursor: pointer;
-    & #yellow {
-      animation: rotateIn 1.5s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
-      animation-direction: normal, reverse;
-    }
-    & #pink {
-      animation: rotateIn 1s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
-    }
-    & #cyan {
-      animation: rotateIn 0.5s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+      & #yellow {
+        animation: rotateIn 1.5s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
+        animation-direction: normal, reverse;
+      }
+      & #pink {
+        animation: rotateIn 1s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
+      }
+      & #cyan {
+        animation: rotateIn 0.5s cubic-bezier(0.4, 1, 0.75, 0.5) infinite forwards;
+      }
     }
   }
 }
@@ -155,61 +162,60 @@
   to { transform: rotate(0deg); }
 }
 
-.menu-mobile-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  visibility: hidden;
-  position: relative;
-  right: -12px;
-  z-index: 15;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  background: transparent !important;
-  opacity: 0;
-  transition-delay: 0s;
-  @media (--desktop) {
-    display: none;
-  }
-  & span {
-    display: block;
-    position: absolute;
-    width: 24px;
-    height: 4px;
-    background: #fff;
-    &:first-child {
-      transform: rotate(45deg);
-    }
-    &:last-child {
-      transform: rotate(-45deg);
-    }
-  }
-}
-
 .menu-mobile-visible {
   max-height: 100vh;
   overflow: hidden;
-  & .menu-mobile-open {
-    top: 0;
-    right: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-    transform: rotate(0deg);
-    transition: top var(--speed) var(--easing), right var(--speed) var(--easing), min-width var(--speed) var(--easing), min-height var(--speed) var(--easing) 0.1s, transform var(--speed) var(--easing);
+  & #yellow,
+  & #pink,
+  & #cyan {
+    fill: #fff;
+  }
+  & #yellow {
+    animation: rotateIn 0.6s cubic-bezier(0.4, 1, 0.75, 0.5);
+  }
+  & #pink {
+    animation: rotateIn 0.4s cubic-bezier(0.4, 1, 0.75, 0.5);
+  }
+  & #cyan {
+    animation: rotateIn 0.2s cubic-bezier(0.4, 1, 0.75, 0.5);
   }
   & .primary-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     visibility: visible;
     position: absolute;
     z-index: 10;
+    height: calc(100vh - 60px);
     opacity: 1;
     transition: visibility var(--speed) var(--easing), opacity var(--speed) var(--easing) 0.3s;
+    & a:hover,
+    & a:focus,
+    & a:active {
+      color: var(--color-primary);
+      background-color: #fff;
+    }
   }
-  & .menu-mobile-close {
-    visibility: visible;
+  & .menu-mobile-background {
     opacity: 1;
-    transition: visibility var(--speed) var(--easing), opacity var(--speed) var(--easing) 0.3s;
+    transform: scale(150);
+    transition: transform 1s var(--easing) 0.1s, opacity 0.5s var(--easing);
   }
+}
+
+.menu-mobile-background {
+  display: block;
+  position: fixed;
+  top: 5px;
+  right: var(--container-horizontal-padding);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  opacity: 0;
+  transition: transform 0.2s var(--easing), opacity 0.2s var(--easing);
+  pointer-events: none;
 }
 
 .band-writer {
@@ -223,3 +229,20 @@
 .band-editor {
   background-color: var(--editor-color);
 }
+
+.link-email {
+  display: none;
+  @media (--desktop) {
+    display: block;
+  }
+  &:hover .shape {
+    fill: var(--link-color);
+  }
+  & svg {
+    width: 1rem;
+  }
+  & .shape {
+    transition: fill var(--speed) var(--easing);
+  }
+}
+
