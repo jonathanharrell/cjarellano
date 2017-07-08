@@ -7,7 +7,7 @@
     <title>C.J. Arellano | Writer • Director • Editor</title>
     <meta name="description" content="C.J. Arellano – Writer. Director. Editor.">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/build/main.css">
-    <?php include 'partials/favicon.php'; ?>
+    <?php get_template_part( 'partials/content', 'favicon' ); ?>
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

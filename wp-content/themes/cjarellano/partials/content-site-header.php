@@ -11,7 +11,6 @@
             'items_wrap'     => '%3$s'
         ]);
         ?>
-<!--        <a href="--><?php //echo esc_url(home_url('/about')); ?><!--" class="link-about">About</a>-->
 <!--        <a href="" class="link-email">em</a>-->
         <span class="underline"></span>
     </nav>

@@ -3,7 +3,7 @@ the_post();
 get_header();
 ?>
 
-<?php include 'partials/site-header.php'; ?>
+<?php get_template_part( 'partials/content', 'site-header' ); ?>
 
 <div class="wrapper">
     <main class="main-content">
@@ -64,6 +64,6 @@ get_header();
     </main>
 </div>
 
-<?php include 'partials/site-footer.php'; ?>
+<?php get_template_part( 'partials/content', 'site-footer' ); ?>
 
 <?php get_footer();

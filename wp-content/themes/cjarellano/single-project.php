@@ -3,7 +3,7 @@ the_post();
 get_header();
 ?>
 
-<?php include 'partials/site-header.php'; ?>
+<?php get_template_part( 'partials/content', 'site-header' ); ?>
 
 <main class="main-content">
     <article class="single-project-content">
@@ -56,7 +56,7 @@ get_header();
             <?php if(have_rows('cja_project_quote')) : ?>
                 <section class="project-quotes">
                     <?php while(have_rows('cja_project_quote')) : the_row(); ?>
-                        <div class="project-quote">
+                        <div class="quote project-quote">
                             <blockquote>
                                 <?php the_sub_field('quote'); ?>
                                 <?php if(get_sub_field('source')) : ?>
@@ -151,6 +151,6 @@ get_header();
     <?php endif; ?>
 </main>
 
-<?php include 'partials/site-footer.php'; ?>
+<?php get_template_part( 'partials/content', 'site-footer' ); ?>
 
 <?php get_footer();

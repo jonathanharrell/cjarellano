@@ -11,8 +11,38 @@
 @import 'projects.css';
 @import 'home.css';
 @import 'single-project.css';
+@import 'about.css';
+
+img {
+  height: auto;
+}
 
 .main-content {
   margin-top: 56px;
+}
+
+.quote {
+  & blockquote {
+    margin-bottom: 0 !important;
+  }
+  & blockquote p {
+    max-width: 45rem;
+    font-size: var(--font-size-large);
+    line-height: 1.75;
+    font-weight: var(--semibold);
+  }
+  & blockquote cite {
+    font-style: normal;
+    font-size: var(--font-size-small);
+    font-weight: var(--medium);
+    &::before {
+      display: block;
+      width: 80px;
+      height: 2px;
+      margin: 1.25rem 0;
+      background-color: var(--gray-darker);
+      content: '';
+    }
+  }
 }
 
