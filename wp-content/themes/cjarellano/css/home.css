@@ -82,7 +82,7 @@
         z-index: 5;
         transform: scale(1.04);
         &::before {
-          opacity: 1;
+          opacity: 0.99;
         }
       }
     }
@@ -124,7 +124,6 @@ body {
     background-image: url('../img/triangles.svg');
     & .home-nav a {
       color: color(var(--writer-color) shade(25%)) !important;
-      opacity: 0.75;
     }
     & .writer-link {
       opacity: 1 !important;
@@ -138,7 +137,6 @@ body {
     background-image: url('../img/circles.svg');
     & .home-nav a {
       color: color(var(--director-color) shade(25%)) !important;
-      opacity: 0.75;
     }
     & .director-link {
       opacity: 1 !important;
@@ -152,7 +150,6 @@ body {
     background-image: url('../img/diamonds.svg');
     & .home-nav a {
       color: color(var(--editor-color) shade(25%)) !important;
-      opacity: 0.75;
     }
     & .editor-link {
       opacity: 1 !important;
