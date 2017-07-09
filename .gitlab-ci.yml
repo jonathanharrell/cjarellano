@@ -1,9 +1,5 @@
 image: node:6
 
-cache:
-  paths:
-    - /home/forge/dev.cjarellano.com/wp-content/themes/cjarellano/node_modules/
-
 stages:
   - deploy
 
