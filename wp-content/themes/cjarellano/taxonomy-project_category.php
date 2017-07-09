@@ -25,10 +25,12 @@ get_header();
                 </button>
             </div>
         </section>
-        <div class="video-container" id="reel-video">
-            <button class="close-video">×</button>
-            <?php echo trim(get_field('cja_project_category_reel')); ?>
-        </div>
+        <?php if(get_field('cja_project_category_reel')) : ?>
+            <div class="video-container" id="reel-video">
+                <button class="close-video">×</button>
+                <?php echo trim(get_field('cja_project_category_reel')); ?>
+            </div>
+        <?php endif; ?>
         <?php
         query_posts([
             'post_type' => 'project',
