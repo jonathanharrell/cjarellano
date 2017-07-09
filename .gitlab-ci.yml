@@ -1,5 +1,9 @@
 image: node:6
 
+cache:
+  paths:
+    - wp-content/themes/cjarellano/node_modules/
+
 stages:
   - build
   - deploy
@@ -8,8 +12,8 @@ build:
   stage: build
   script:
     - cd wp-content/themes/cjarellano/
-    - npm run production
     - npm install
+    - npm run production
 
 deploy_dev:
   stage: deploy
