@@ -11,10 +11,10 @@ const initScene = controller => {
             .add([
                 TweenMax.fromTo('.lead', 1, { top: '-8.75rem' }, { top: '-15rem' }),
                 TweenMax.fromTo('.watch-video', 1, { bottom: '33.333%' }, { bottom: '40%' }),
-                TweenMax.fromTo('.selected-projects', 1, { top: 0 }, { top: -100 })
+                TweenMax.fromTo('.selected-projects', 1, { top: 0 }, { top: -150 })
             ])
 
-        new ScrollMagic.Scene({ triggerElement: '.watch-video', duration: (window.innerHeight * 1.5) })
+        new ScrollMagic.Scene({ triggerElement: '.lead', duration: (window.innerHeight * 2) })
             .setTween(tween)
             .addTo(controller)
     }
