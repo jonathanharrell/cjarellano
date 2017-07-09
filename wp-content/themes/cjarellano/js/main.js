@@ -12,6 +12,8 @@ const setupErrorLogging = () => {
     Raven
         .config('https://066aaf058a4f4e4a91261ccd70992aeb@sentry.io/189487')
         .install()
+
+    throw Error('test')
 }
 
 document.addEventListener('DOMContentLoaded', () => {
