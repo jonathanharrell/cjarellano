@@ -1,6 +1,7 @@
 image: node:6
 
 before_script:
+  - cd wp-content/themes/cjarellano/
   - npm install
 
 cache:
