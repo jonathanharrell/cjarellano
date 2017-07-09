@@ -21,3 +21,16 @@ deploy_dev:
   only:
   - develop
 
+deploy_prod:
+  stage: deploy
+  script:
+    - cd /home/forge/cjarellano.com
+    - git pull
+    - cd wp-content/themes/cjarellano
+    - npm install
+    - npm run production
+  environment:
+    name: prod
+    url: https://cjarellano.com
+  only:
+  - master
