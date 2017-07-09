@@ -20,7 +20,7 @@ build:
 deploy_dev:
   stage: deploy
   script:
-    - curl -X POST https://forge.laravel.com/servers/143432/sites/363646/deploy/http?token=2cURxs0ojttWmXqJuVqyvj4ypda3sZFLMofWGzXR
+    - rsync -av --delete wp-content/themes/cjarellano /home/forge/$CI_COMMIT_REF_SLUG
   environment:
     name: dev
     url: https://dev.cjarellano.com
