@@ -9,6 +9,7 @@ deploy_dev:
     - cd /home/forge/dev.cjarellano.com
     - git pull
     - cd wp-content/themes/cjarellano
+    - npm prune
     - npm install
     - npm run production
   environment:
@@ -23,6 +24,7 @@ deploy_prod:
     - cd /home/forge/cjarellano.com
     - git pull
     - cd wp-content/themes/cjarellano
+    - npm prune
     - npm install
     - npm run production
   environment:
