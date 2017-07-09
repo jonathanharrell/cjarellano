@@ -9,8 +9,5 @@ cache:
 
 publish:
   stage: deploy
-  only:
-    - tags
-    - triggers
   script:
     - npm run build
