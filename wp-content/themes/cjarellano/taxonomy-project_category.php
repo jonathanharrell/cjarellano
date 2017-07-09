@@ -19,10 +19,12 @@ get_header();
                 <p class="lead">
                     <span><?php echo term_description(); ?></span>
                 </p>
-                <button class="watch-video" data-video-id="reel-video">
-                    <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
-                    <span class="watch-it">Watch it</span>
-                </button>
+                <?php if(get_field('cja_project_category_reel')) : ?>
+                    <button class="watch-video" data-video-id="reel-video">
+                        <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
+                        <span class="watch-it">Watch it</span>
+                    </button>
+                <?php endif; ?>
             </div>
         </section>
         <?php if(get_field('cja_project_category_reel')) : ?>
