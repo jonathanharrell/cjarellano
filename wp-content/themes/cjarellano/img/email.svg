@@ -1,9 +1,10 @@
-<svg width="20px" height="18px" viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-weight="normal" font-family="MaterialIcons-Regular, Material Icons" letter-spacing="3.60000086" font-size="24">
-        <g id="Desktop-HD-Copy-10" transform="translate(-1381.000000, -57.000000)" fill="#000000">
-            <text class="shape">
-                <tspan x="1379.4" y="78"></tspan>
-            </text>
-        </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.1 (43504) - http://www.bohemiancoding.com/sketch -->
+    <title></title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M18.415625,5.015625 L18.415625,3 L10.4,8.015625 L2.384375,3 L2.384375,5.015625 L10.4,9.984375 L18.415625,5.015625 Z M18.415625,0.984375 C18.9468777,0.984375 19.4078105,1.18749797 19.7984375,1.59375 C20.1890645,2.00000203 20.384375,2.46874734 20.384375,3 L20.384375,15 C20.384375,15.5312527 20.1890645,15.999998 19.7984375,16.40625 C19.4078105,16.812502 18.9468777,17.015625 18.415625,17.015625 L2.384375,17.015625 C1.85312234,17.015625 1.39218945,16.812502 1.0015625,16.40625 C0.610935547,15.999998 0.415625,15.5312527 0.415625,15 L0.415625,3 C0.415625,2.46874734 0.610935547,2.00000203 1.0015625,1.59375 C1.39218945,1.18749797 1.85312234,0.984375 2.384375,0.984375 L18.415625,0.984375 Z" id="" fill="#000000"></path>
     </g>
 </svg>

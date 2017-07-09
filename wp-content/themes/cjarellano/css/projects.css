@@ -119,6 +119,7 @@
       }
     }
     & .project-lead {
+      width: 100%;
       @media (--desktop) {
         opacity: 1;
       }

@@ -1,7 +1,4 @@
 .site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
@@ -27,6 +24,14 @@
 
 .scrolling-down .site-header {
   transform: translateY(-100%);
+}
+
+.site-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
 }
 
 .brand:hover {
@@ -56,6 +61,7 @@
     width: 100%;
     @media (--desktop) {
       display: inline-block;
+      width: auto;
     }
     &:not(:last-child) {
       @media (--desktop) {
@@ -105,6 +111,7 @@
   right: var(--container-horizontal-padding);
   z-index: 15;
   width: 40px;
+  height: 40px;
   transform: translateY(-50%);
   cursor: pointer;
   @media (--desktop) {
@@ -112,6 +119,7 @@
     top: 10px;
     left: 50%;
     width: 60px;
+    height: 60px;
     transform: translateX(-50%);
   }
   & svg {
@@ -205,7 +213,6 @@
 }
 
 .menu-mobile-background {
-  display: block;
   position: fixed;
   top: 5px;
   right: var(--container-horizontal-padding);

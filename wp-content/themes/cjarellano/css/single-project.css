@@ -27,13 +27,15 @@
     }
     &::after {
       @media (--desktop) {
-        clip-path: inset(0 61% -10% 0);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        color: #fff;
-        content: attr(data-title);
+        @supports (clip-path: inset(0 61% -10% 0)) {
+          clip-path: inset(0 61% -10% 0);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          color: #fff;
+          content: attr(data-title);
+        }
       }
     }
   }
@@ -51,9 +53,6 @@
     width: 100%;
     margin: 2rem 0;
     padding: 35% 0;
-    background-color: var(--gray-light);
-    background-repeat: no-repeat;
-    background-position: center;
     background-size: cover;
     @media (--desktop) {
       margin: 0;
@@ -246,6 +245,9 @@
       @media (--desktop) {
         margin-top: 6rem;
       }
+    }
+    &:hover {
+      background-color: var(--color-primary);
     }
   }
 }

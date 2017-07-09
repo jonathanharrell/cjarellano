@@ -12,8 +12,9 @@
   }
   & .social-links {
     margin: 2rem 0;
-    & a img {
-      opacity: 1;
+    & a {
+      display: block;
+      overflow: hidden;
     }
     & .shape {
       transition: fill var(--speed) var(--easing);
@@ -25,6 +26,7 @@
 }
 
 .contact-me {
+  overflow: hidden;
   font-size: var(--font-size-large);
   text-transform: uppercase;
   font-weight: var(--semibold);
