@@ -2,23 +2,19 @@ image: node:6
 
 cache:
   paths:
-    - wp-content/themes/cjarellano/node_modules/
+    - /home/forge/dev.cjarellano.com/wp-content/themes/cjarellano/node_modules/
 
 stages:
-  - build
   - deploy
-
-build:
-  stage: build
-  script:
-    - cd wp-content/themes/cjarellano/
-    - npm install
-    - npm run production
 
 deploy_dev:
   stage: deploy
   script:
-    - rsync -av --delete ~/ /home/forge/dev.cjarellano.com
+    - cd /home/forge/dev.cjarellano.com
+    - git pull
+    - cd wp-content/themes/cjarellano
+    - npm install
+    - npm run production
   environment:
     name: dev
     url: https://dev.cjarellano.com
