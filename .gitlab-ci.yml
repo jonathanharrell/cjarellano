@@ -18,7 +18,7 @@ build:
 deploy_dev:
   stage: deploy
   script:
-    - rsync -av --delete wp-content/themes/cjarellano /home/forge/dev.cjarellano.com
+    - rsync -av --delete ~/ /home/forge/dev.cjarellano.com
   environment:
     name: dev
     url: https://dev.cjarellano.com
