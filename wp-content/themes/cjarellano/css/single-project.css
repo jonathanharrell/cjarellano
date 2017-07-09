@@ -43,6 +43,7 @@
     @apply --all-caps;
   }
   & .image-container {
+    position: relative;
     @media (--desktop) {
       float: left;
       width: 55%;
