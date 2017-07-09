@@ -8,7 +8,30 @@ cache:
   paths:
     - node_modules/
 
-publish:
-  stage: deploy
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
   script:
     - npm run production
+
+deploy_dev:
+  stage: deploy
+  script:
+    - curl -X POST https://forge.laravel.com/servers/143432/sites/363646/deploy/http?token=2cURxs0ojttWmXqJuVqyvj4ypda3sZFLMofWGzXR
+  environment:
+    name: dev
+    url: https://dev.cjarellano.com
+  only:
+  - develop
+
+deploy_prod:
+  stage: deploy
+  script:
+  enviroment:
+    name: prod
+    url: https://www.cjarellano.com
+  only:
+  - master
