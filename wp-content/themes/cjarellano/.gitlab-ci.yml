@@ -1,0 +1,21 @@
+if [ $flag -gt 0 ];then
+    npm install --force
+fi
+npm run build
+
+image: node:6
+
+before_script:
+  - npm install
+
+cache:
+  paths:
+    - node_modules/
+
+publish:
+  stage: deploy
+  only:
+    - tags
+    - triggers
+  script:
+    - npm run build
