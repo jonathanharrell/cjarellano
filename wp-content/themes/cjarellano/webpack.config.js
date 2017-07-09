@@ -20,6 +20,8 @@ module.exports = {
         filename: '[name].js'
     },
 
+    devtool: 'source-map',
+
     module: {
         rules: [
             {
@@ -119,6 +121,6 @@ module.exports = {
 
 if (inProduction) {
     module.exports.plugins.push(
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
     )
 }
