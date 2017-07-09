@@ -27,7 +27,7 @@
     font-weight: var(--bold);
     @media (--desktop) {
       position: absolute;
-      top: -8.75rem;
+      top: -5rem;
       left: 40%;
       width: 60%;
       height: 22rem;

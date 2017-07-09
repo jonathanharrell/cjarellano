@@ -9,9 +9,9 @@ const initScene = controller => {
     if (controller) {
         const tween = new TimelineMax()
             .add([
-                TweenMax.fromTo('.lead', 1, { top: '-8.75rem' }, { top: '-15rem' }),
-                TweenMax.fromTo('.watch-video', 1, { bottom: '33.333%' }, { bottom: '40%' }),
-                TweenMax.fromTo('.selected-projects', 1, { top: 0 }, { top: -150 })
+                TweenMax.fromTo('.lead', 1, { top: '-1rem' }, { top: '-15rem' }),
+                TweenMax.fromTo('.watch-video', 1, { bottom: '33.333%' }, { bottom: '50%' }),
+                TweenMax.fromTo('.selected-projects', 1, { top: 150 }, { top: -200 })
             ])
 
         new ScrollMagic.Scene({ triggerElement: '.lead', duration: (window.innerHeight * 2) })

@@ -3,7 +3,10 @@
   --font-family-sans-serif: 'Sharp Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 
   /* font sizes */
-  --unitless-max-font-size: 1;
+  --unitless-min-font-size: 16;
+  --unitless-max-font-size: 18;
+  --unitless-lower-font-range: 460;
+  --unitless-upper-font-range: 1200;
   --font-size-4: 1.25rem;
 
   /* weights */
