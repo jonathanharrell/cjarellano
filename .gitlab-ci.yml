@@ -30,7 +30,7 @@ deploy_dev:
 deploy_prod:
   stage: deploy
   script:
-  enviroment:
+  environment:
     name: prod
     url: https://www.cjarellano.com
   only:
