@@ -128,6 +128,7 @@
 .more-about-title {
   @apply --all-caps;
   clear: both;
+  margin-top: 5rem;
   line-height: var(--base-line-height);
   @media (--desktop) {
     margin-bottom: 3rem;
