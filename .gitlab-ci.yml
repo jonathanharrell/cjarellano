@@ -10,4 +10,4 @@ cache:
 publish:
   stage: deploy
   script:
-    - npm run build
+    - npm run production
