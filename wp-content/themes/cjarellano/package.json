@@ -11,11 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://jh-design@bitbucket.org/jh-design/cjarellano-v3.git"
+    "url": "git+https://jonathanharrell/cjarellano.git"
   },
   "author": "Jonathan Harrell",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/jh-design/cjarellano-v3#readme",
+  "homepage": "https://www.cjarellano.com",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
