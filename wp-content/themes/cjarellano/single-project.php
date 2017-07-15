@@ -16,7 +16,7 @@ get_header();
             </header>
             <div class="image-container">
                 <div class="image responsive-image">
-                    <?php the_post_thumbnail(); ?>
+                    <?php the_post_thumbnail('medium'); ?>
                 </div>
                 <?php if(get_field('cja_project_video')) : ?>
                     <button class="watch-video" data-video-id="reel-video">

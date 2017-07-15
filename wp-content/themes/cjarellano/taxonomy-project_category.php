@@ -57,7 +57,7 @@ get_header();
                             <article class="project">
                                 <a href="<?php the_permalink(); ?>"></a>
                                 <div class="project-thumbnail responsive-image">
-                                    <?php the_post_thumbnail(); ?>
+                                    <?php the_post_thumbnail('medium'); ?>
                                 </div>
                                 <div class="project-info">
                                     <h3 class="project-type"><?php the_field('cja_project_type'); ?></h3>
