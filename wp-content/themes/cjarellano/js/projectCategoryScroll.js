@@ -9,7 +9,7 @@ const initScene = controller => {
     if (controller) {
         const tween = new TimelineMax()
             .add([
-                TweenMax.fromTo('.lead', 1, { top: '-1rem' }, { top: '-15rem' }),
+                TweenMax.fromTo('.lead', 1, { top: '-3rem' }, { top: '-15rem' }),
                 TweenMax.fromTo('.watch-video', 1, { bottom: '33.333%' }, { bottom: '50%' }),
                 TweenMax.fromTo('.selected-projects', 1, { top: 150 }, { top: -200 })
             ])

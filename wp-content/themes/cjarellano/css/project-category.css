@@ -2,6 +2,9 @@
   @media (--desktop) {
     margin-top: 15rem;
   }
+  & .site-footer {
+    margin-top: 0;
+  }
 }
 
 .reel {

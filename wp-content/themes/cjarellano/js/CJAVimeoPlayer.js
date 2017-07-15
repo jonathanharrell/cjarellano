@@ -15,7 +15,6 @@ export default class CJAVimeoPlayer {
         this.player.play()
 
         this.player.on('ended', () => {
-            console.log('test')
             if (this.onVideoEnd) {
                 this.onVideoEnd()
             }
