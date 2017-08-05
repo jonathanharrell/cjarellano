@@ -15,7 +15,6 @@ const loadResponsiveImagesPolyfill = () => {
             }
         })
     }
-
 }
 
 export default loadResponsiveImagesPolyfill
