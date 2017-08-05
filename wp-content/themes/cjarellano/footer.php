@@ -8,6 +8,7 @@
         }
     </style>
 </noscript>
+<?php get_template_part( 'partials/content', 'analytics-tracking' ); ?>
 <?php wp_footer(); ?>
 </body>
 </html>
