@@ -100,7 +100,7 @@ get_header();
             <?php endif; ?>
             <?php if(get_field('cja_project_excerpt')) : ?>
                 <section class="project-excerpt">
-                    <h2>Excerpt</h2>
+                    <h2><?php the_title(); ?></h2>
                     <div class="project-excerpt-text">
                         <?php the_field('cja_project_excerpt'); ?>
                     </div>
