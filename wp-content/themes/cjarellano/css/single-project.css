@@ -123,6 +123,10 @@
     &.contribution-editor::after {
       border-color: var(--editor-color);
     }
+
+    &.contribution-motion::after {
+      border-color: var(--editor-color);
+    }
   }
 }
 
