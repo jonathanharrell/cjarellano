@@ -16,7 +16,7 @@ get_header();
             </header>
             <div class="image-container">
                 <div class="image responsive-image">
-                    <?php the_post_thumbnail(); ?>
+                    <?php the_post_thumbnail('medium'); ?>
                 </div>
                 <?php if(get_field('cja_project_video')) : ?>
                     <button class="watch-video" data-video-id="reel-video">
@@ -100,7 +100,7 @@ get_header();
             <?php endif; ?>
             <?php if(get_field('cja_project_excerpt')) : ?>
                 <section class="project-excerpt">
-                    <h2>Excerpt</h2>
+                    <h2><?php the_title(); ?></h2>
                     <div class="project-excerpt-text">
                         <?php the_field('cja_project_excerpt'); ?>
                     </div>

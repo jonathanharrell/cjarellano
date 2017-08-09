@@ -1,7 +1,6 @@
 const webpack = require('webpack')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const StyleLintPlugin = require('stylelint-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const inProduction = (process.env.NODE_ENV === 'production')
@@ -19,6 +18,8 @@ module.exports = {
         path: path.resolve(__dirname, './build'),
         filename: '[name].js'
     },
+
+    devtool: 'source-map',
 
     module: {
         rules: [
@@ -90,10 +91,6 @@ module.exports = {
 
         new ExtractTextPlugin('[name].css'),
 
-        new StyleLintPlugin({
-            files: ['**/*.css']
-        }),
-
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             filename: 'vendor.js'
@@ -119,6 +116,6 @@ module.exports = {
 
 if (inProduction) {
     module.exports.plugins.push(
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
     )
 }

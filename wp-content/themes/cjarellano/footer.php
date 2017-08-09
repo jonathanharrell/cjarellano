@@ -1,5 +1,5 @@
-<script src="<?php echo get_template_directory_uri(); ?>/build/vendor.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/build/main.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/build/vendor.js" defer></script>
+<script src="<?php echo get_template_directory_uri(); ?>/build/main.js" defer></script>
 <noscript>
     <style>
         .transition-in {
@@ -8,6 +8,7 @@
         }
     </style>
 </noscript>
+<?php get_template_part( 'partials/content', 'analytics-tracking' ); ?>
 <?php wp_footer(); ?>
 </body>
 </html>

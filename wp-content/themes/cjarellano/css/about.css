@@ -5,6 +5,7 @@
     display: inline-block;
     position: relative;
     z-index: 1;
+    margin-top: 3rem;
     margin-bottom: 0;
     font-size: 5.5rem;
   }

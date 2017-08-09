@@ -9,7 +9,7 @@ get_header();
 
 <main class="main-content">
     <div class="container">
-        <h1>C.J. Arellano</h1>
+        <h1><a href="<?php echo esc_url(home_url('/about')); ?>">C.J. Arellano</a></h1>
         <nav class="home-nav transition-in">
             <a href="<?php echo esc_url(home_url('/writing')); ?>" class="writer-link">Writer</a>
             <a href="<?php echo esc_url(home_url('/directing')); ?>" class="director-link">Director</a>

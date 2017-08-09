@@ -43,6 +43,7 @@
     @apply --all-caps;
   }
   & .image-container {
+    position: relative;
     @media (--desktop) {
       float: left;
       width: 55%;
@@ -122,6 +123,10 @@
     &.contribution-editor::after {
       border-color: var(--editor-color);
     }
+
+    &.contribution-motion::after {
+      border-color: var(--editor-color);
+    }
   }
 }
 
@@ -159,6 +164,9 @@
 
 .project-awards {
   margin-bottom: 3rem;
+  @media (--desktop) {
+    margin-bottom: 8rem;
+  }
   & ul {
     margin: 0;
     list-style: none;
@@ -213,6 +221,7 @@
   font-weight: var(--medium);
   @media (--desktop) {
     max-width: 45rem;
+    margin-bottom: 8rem;
   }
   &::first-letter {
     float: left;
@@ -225,7 +234,7 @@
 .related-projects {
   margin-top: 5rem;
   @media (--desktop) {
-    margin-top: 8rem;
+    margin-top: 0;
   }
   & h2 {
     @apply --all-caps;

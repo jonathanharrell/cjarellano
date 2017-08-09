@@ -19,16 +19,20 @@ get_header();
                 <p class="lead">
                     <span><?php echo term_description(); ?></span>
                 </p>
-                <button class="watch-video" data-video-id="reel-video">
-                    <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
-                    <span class="watch-it">Watch it</span>
-                </button>
+                <?php if(get_field('cja_project_category_reel')) : ?>
+                    <button class="watch-video" data-video-id="reel-video">
+                        <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
+                        <span class="watch-it">Watch it</span>
+                    </button>
+                <?php endif; ?>
             </div>
         </section>
-        <div class="video-container" id="reel-video">
-            <button class="close-video">×</button>
-            <?php echo trim(get_field('cja_project_category_reel')); ?>
-        </div>
+        <?php if(get_field('cja_project_category_reel')) : ?>
+            <div class="video-container" id="reel-video">
+                <button class="close-video">×</button>
+                <?php echo trim(get_field('cja_project_category_reel')); ?>
+            </div>
+        <?php endif; ?>
         <?php
         query_posts([
             'post_type' => 'project',
@@ -53,7 +57,7 @@ get_header();
                             <article class="project">
                                 <a href="<?php the_permalink(); ?>"></a>
                                 <div class="project-thumbnail responsive-image">
-                                    <?php the_post_thumbnail(); ?>
+                                    <?php the_post_thumbnail('medium'); ?>
                                 </div>
                                 <div class="project-info">
                                     <h3 class="project-type"><?php the_field('cja_project_type'); ?></h3>

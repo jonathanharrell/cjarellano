@@ -1,5 +1,5 @@
 {
-  "name": "cjarellano-v3",
+  "name": "cjarellano",
   "version": "1.0.0",
   "description": "C.J. Arellano's portfolio site.",
   "main": "index.js",
@@ -11,11 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://jh-design@bitbucket.org/jh-design/cjarellano-v3.git"
+    "url": "git+https://jonathanharrell/cjarellano.git"
   },
   "author": "Jonathan Harrell",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/jh-design/cjarellano-v3#readme",
+  "homepage": "https://www.cjarellano.com",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
@@ -44,13 +44,13 @@
     "style-loader": "^0.16.1",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.3",
-    "stylelint-webpack-plugin": "^0.7.0",
     "webpack": "^2.4.1"
   },
   "dependencies": {
     "@vimeo/player": "^2.1.0",
     "gsap": "^1.20.2",
-    "hiq": "^0.1.3",
+    "hiq": "^0.5.0",
+    "raven-js": "^3.16.1",
     "scrollmagic": "^2.0.5",
     "underscore": "^1.8.3",
     "youtube-player": "^5.4.0"

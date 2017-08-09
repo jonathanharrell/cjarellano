@@ -1,16 +1,36 @@
-image: node:6
-
-before_script:
-  - npm install
-
 cache:
   paths:
-    - node_modules/
+    - /home/forge/dev.cjarellano.com/wp-content/themes/cjarellano/node_modules/
 
-publish:
+stages:
+  - deploy
+
+deploy_dev:
   stage: deploy
-  only:
-    - tags
-    - triggers
   script:
-    - npm run build
+    - cd /home/forge/dev.cjarellano.com
+    - git pull
+    - cd wp-content/themes/cjarellano
+    - npm prune
+    - npm install
+    - npm run production
+  environment:
+    name: dev
+    url: https://dev.cjarellano.com
+  only:
+  - develop
+
+deploy_prod:
+  stage: deploy
+  script:
+    - cd /home/forge/cjarellano.com
+    - git pull
+    - cd wp-content/themes/cjarellano
+    - npm prune
+    - npm install
+    - npm run production
+  environment:
+    name: prod
+    url: https://cjarellano.com
+  only:
+  - master
