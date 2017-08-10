@@ -112,6 +112,12 @@ Google Pagespeed Insights requires a Google API Key. Keys are free and can be ob
 
 == Changelog ==
 
+= 2.0.3 =
+* Updating to latest google api php library 2.2.0 to resolve issues with PHP 7.1
+
+= 2.0.2 =
+* Fixed bug which improperly returned WP Cron schedules on cron_schedules filter
+
 = 2.0.1 =
 * Removed phpseclib unit tests from Google PHP API library to avoid false-positive with WordFence
 
@@ -155,6 +161,12 @@ Google Pagespeed Insights requires a Google API Key. Keys are free and can be ob
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.0.3 =
+* Updating to latest google api php library 2.2.0 to resolve issues with PHP 7.1
+
+= 2.0.2 =
+* Fixed bug which improperly returned WP Cron schedules on cron_schedules filter
 
 = 2.0.1 =
 * Removed phpseclib unit tests from Google PHP API library to avoid false-positive with WordFence
