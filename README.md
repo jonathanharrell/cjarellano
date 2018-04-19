@@ -2,6 +2,8 @@
 
 `cd wp-content/themes/cjarellano`
 
+`npm install`
+
 `npm run modernizr`
 Run modernizr build
 
