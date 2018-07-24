@@ -36,7 +36,7 @@ get_header();
         <?php
         query_posts([
             'post_type' => 'project',
-            'posts_per_page' => 5,
+            'posts_per_page' => 8,
             'orderby' => 'menu_order',
             'order' => 'ASC',
             'tax_query' => [

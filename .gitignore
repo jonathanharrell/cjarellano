@@ -1,5 +1,6 @@
-build
 wp-config.php
+wp-content/themes/cjarellano/node_modules
+wp-content/themes/cjarellano/build
 wp-content/uploads
 wp-content/advanced-cache.php
 wp-content/cache
