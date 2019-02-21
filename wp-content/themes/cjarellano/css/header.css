@@ -137,7 +137,7 @@
   }
   & #pink {
     animation: rotateOut 0.4s ease-out;
-    transform-origin: 2% 50%;
+    transform-origin: 50%;
   }
   & #cyan {
     animation: rotateOut 0.3s ease-out;
