@@ -11,19 +11,15 @@ get_header();
 
     <div class="wrapper">
         <main class="main-content">
-            <div class="container">
-                <header class="about-header">
-                    <h1 class="about-title"><?php the_title(); ?></h1>
-                    <div class="about-image">
-                        <?php the_post_thumbnail(); ?>
-                    </div>
-                </header>
+            <div class="about-wrapper">
+                <figure class="about-image">
+                    <?php the_post_thumbnail(); ?>
+                </figure>
                 <div class="about-info">
-                    <div class="about-text">
-                        <p class="about-lead">Writer. Director. Editor.</p>
-                        <div class="about-description">
-                            <?php the_content(); ?>
-                        </div>
+                    <h1 class="about-title"><?php the_title(); ?></h1>
+                    <p class="about-lead">Writer. Director. Editor.</p>
+                    <div class="about-description">
+                        <?php the_content(); ?>
                     </div>
                     <?php if (have_rows('cja_about_quote')) : ?>
                         <section class="about-quotes">

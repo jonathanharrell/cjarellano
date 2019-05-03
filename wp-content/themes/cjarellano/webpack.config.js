@@ -103,7 +103,7 @@ module.exports = {
         new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
-            proxy: 'cjarellano.dev',
+            proxy: 'localhost:8888',
             files: [
                 path.join(__dirname, '**/*.php'),
                 path.join(__dirname, 'build/*')
