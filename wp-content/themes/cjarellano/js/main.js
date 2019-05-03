@@ -6,7 +6,6 @@ import loadResponsiveImagesPolyfill from './responsiveImages'
 import loadVideos from './videos'
 import loadProjectCategoryScroll from './projectCategoryScroll'
 import loadProjectScroll from './projectScroll'
-import loadAboutScroll from './aboutScroll'
 
 const setupErrorLogging = () => {
     Raven
@@ -23,5 +22,4 @@ document.addEventListener('DOMContentLoaded', () => {
     loadVideos()
     loadProjectCategoryScroll()
     loadProjectScroll()
-    loadAboutScroll()
 })
