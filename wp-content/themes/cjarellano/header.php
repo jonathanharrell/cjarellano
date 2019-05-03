@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>C.J. Arellano | Writer. Director. Editor.</title>
     <meta name="description" content="C.J. Arellano – Writer. Director. Editor.">
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/build/main.css">
+    <link rel="stylesheet" href="<?php echo $GLOBALS['assets']->get(get_template_directory_uri() . '/build', 'main.css'); ?>">
     <?php get_template_part( 'partials/content', 'favicon' ); ?>
     <?php wp_head(); ?>
 </head>

@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const inProduction = (process.env.NODE_ENV === 'production')
 
@@ -16,7 +17,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, './build'),
-        filename: '[name].js'
+        filename: inProduction ? '[name].[hash].js' : '[name].js'
     },
 
     devtool: 'source-map',
@@ -89,12 +90,15 @@ module.exports = {
             dry: false
         }),
 
-        new ExtractTextPlugin('[name].css'),
+        new ExtractTextPlugin(inProduction
+            ? '[name].[hash].css' : '[name].css'),
 
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             filename: 'vendor.js'
         }),
+
+        new ManifestPlugin(),
 
         new webpack.LoaderOptionsPlugin({
             minimize: inProduction
