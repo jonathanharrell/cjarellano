@@ -4,6 +4,9 @@ img {
 
 .main-content {
   margin-top: 56px;
+  @media (--desktop) {
+    margin-top: 88px;
+  }
 }
 
 .responsive-image {
