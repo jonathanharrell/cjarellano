@@ -7,7 +7,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
   width: 100vw;
   height: 100vh;
   background-color: black;
@@ -15,6 +14,7 @@
   transition: opacity 0.2s var(--easing), visibility 0.2s var(--easing) var(--speed);
   &.visible {
     visibility: visible;
+    z-index: 100;
     opacity: 1;
     transition: opacity 0.2s var(--easing);
   }
