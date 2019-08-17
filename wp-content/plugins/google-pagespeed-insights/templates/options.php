@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="padded">
 			<p><?php _e( 'Google API Key:', 'gpagespeedi' ); ?></p>
 			<input type="text" name="google_developer_key" id="google_developer_key" value="<?php echo $this->gpi_options['google_developer_key']; ?>" class="googleapi code" />
-			<p class="description"><span style="color:red;"><?php _e( 'This is required', 'gpagespeedi' ); ?></span>: <?php _e( 'if you do not have an API key you can create a new one for free from', 'gpagespeedi' ); ?>: <a href="https://console.developers.google.com" target="_blank">https://console.developers.google.com</a>. Read the documentation included with this plugin or <a href="http://mattkeys.me/documentation/google-pagespeed-insights/#required_configuration" target="_blank">online</a> for additional information about creating an API key.</p>
+			<p class="description"><span style="color:red;"><?php _e( 'This is required', 'gpagespeedi' ); ?></span>: <?php _e( 'if you do not have an API key you can create a new one for free from', 'gpagespeedi' ); ?>: <a href="https://console.developers.google.com" target="_blank">https://console.developers.google.com</a>. <?php _e( 'Read the documentation included with this plugin or <a href="http://mattkeys.me/documentation/google-pagespeed-insights/#required_configuration" target="_blank">online</a> for additional information about creating an API key.', 'gpagespeedi' ); ?></p>
 
 			<p><?php _e( 'Google Response Language:', 'gpagespeedi' ); ?></p>
 			<select name="response_language" id="response_language">
@@ -73,6 +73,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<option value="mobile" <?php selected( $this->gpi_options['strategy'], 'mobile' ); ?>><?php _e( 'Mobile', 'gpagespeedi' ); ?></option>
 				<option value="both" <?php selected( $this->gpi_options['strategy'], 'both' ); ?>><?php _e( 'Both', 'gpagespeedi' ); ?></option>
 			</select>
+
+			<p><?php _e( 'Store Page Load Screenshots:', 'gpagespeedi' ); ?></p>
+			<select name="store_screenshots" id="store_screenshots">
+				<option value="0" <?php selected( $this->gpi_options['store_screenshots'], 0 ); ?>><?php _e( 'No', 'gpagespeedi' ); ?></option>
+				<option value="1" <?php selected( $this->gpi_options['store_screenshots'], 1 ); ?>><?php _e( 'Yes', 'gpagespeedi' ); ?></option>
+			</select>
+			<p class="description"><span style="color:red;"><?php _e( 'Note', 'gpagespeedi' ); ?></span>: <?php _e( 'Screenshots stored in the database will usually take up around 50kb ~ 150kb per page report. If you have many pages to report on this may consume an unreasonable amount of space. Changes to this value will take effect on future report scans.', 'gpagespeedi' ); ?></p>
 		</div>
 	</div>
 
@@ -83,18 +90,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="padded hidden">
 
-			<?php do_action( 'gpi_before_recheck_interval', $this->gpi_options['use_schedule'] ); ?>
+			<p><h4><?php _e( 'Choose wether or not Google Pagespeed Insights should automatically re-check page scores, and if so, how often.', 'gpagespeedi' ); ?></h4></p>
+			<p class="checkbx">
+				<input type="checkbox" name="use_schedule" id="use_schedule" <?php checked( $this->gpi_options['use_schedule'] ); ?>/>
+				<label for="use_schedule"><?php _e( 'Automatically re-check Pagespeed Insights scores using a schedule', 'gpagespeedi' ); ?></label>
+				<?php if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) : ?>
+					<p class="description"><strong><?php _e( 'Notice', 'gpagespeedi' ); ?>:</strong> <?php _e( 'The WP Cron service this plugin uses to check pages is disabled. Hosting providers often disable the WP Cron service and run their own manual Cron service on an interval of their choosing. Contact your hosting provider if scheduled checks fail to run.', 'gpagespeedi' ); ?></p>
+				<?php endif; ?>
+			</p>
 
-			<p><label for="recheck_interval"><?php echo apply_filters( 'gpi_recheck_interval_label', __( 'Report Expiration', 'gpagespeedi' ) ); ?>:</label></p>
+			<p><label for="recheck_interval"><?php _e( 'Report Expiration / Recheck Interval', 'gpagespeedi' ); ?>:</label></p>
 			<select name="recheck_interval" id="recheck_interval">
 				<option value="<?php echo DAY_IN_SECONDS;?>" <?php selected( $this->gpi_options['recheck_interval'], DAY_IN_SECONDS ); ?>><?php _e( '1 Day', 'gpagespeedi' ); ?></option>
 				<option value="<?php echo WEEK_IN_SECONDS;?>" <?php selected( $this->gpi_options['recheck_interval'], WEEK_IN_SECONDS ); ?>><?php _e( '7 Days', 'gpagespeedi' ); ?></option>
 				<option value="<?php echo MONTH_IN_SECONDS / 2;?>" <?php selected( $this->gpi_options['recheck_interval'], MONTH_IN_SECONDS / 2 ); ?>><?php _e( '15 Days', 'gpagespeedi' ); ?></option>
 				<option value="<?php echo MONTH_IN_SECONDS;?>" <?php selected( $this->gpi_options['recheck_interval'], MONTH_IN_SECONDS ); ?>><?php _e( '30 Days', 'gpagespeedi' ); ?></option>
 			</select>
-			<p class="description"><?php echo apply_filters( 'gpi_recheck_interval_description', __( 'When using "Save Options & Check Pages", pages which are newer than the specified Report Expiration will be skipped.', 'gpagespeedi' ) ); ?></p>
+			<p class="description"><?php _e( 'When page reporting is running, pages which are newer than the specified Report Expiration will be skipped.', 'gpagespeedi' ) . '<br />' . __( 'If "Automatically re-check Pagespeed Insights scores" is checked above, this option will control its frequency.', 'gpagespeedi' ); ?></p>
 
-			<?php do_action( 'gpi_after_recheck_interval' ); ?>
+			<?php
+				$timestamp = wp_next_scheduled( 'googlepagespeedinsightsworker' );
+				if ( $timestamp ) {
+					?>
+					<p><strong><?php _e( 'Next Scheduled Check', 'gpagespeedi' ); ?></strong>: <?php echo get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $timestamp ), 'F, d @ g:i a' ); ?></p>
+					<?php
+				}
+			?>
 
 			<hr>
 			<p><h4><?php _e( 'Configure which types of URLs should be checked when running reports.', 'gpagespeedi' ); ?></h4></p>
@@ -112,7 +133,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<label for="check_categories"><?php _e( 'Check Category Indexes', 'gpagespeedi' ); ?> (<?php echo count( get_categories() ) ?>)</label>
 			</p>
 
-			<?php do_action( 'gpi_report_url_types', $this->gpi_options['check_custom_urls'] ); ?>
+			<p class="checkbx">
+				<input type="checkbox" name="check_custom_urls" id="check_custom_urls" <?php checked( $this->gpi_options['check_custom_urls'] ); ?>/>
+				<label for="check_custom_urls"><?php _e( 'Check Custom URLs', 'gpagespeedi' ); ?> (<?php echo $custom_urls_count = apply_filters( 'gpi_custom_urls_count', 0 ); ?>)</label>
+			</p>
 
 			<?php
 				$custom_post_types = apply_filters( 'gpi_custom_post_types', array() );
@@ -164,6 +188,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<p><label for="max_run_time"><?php _e( 'Maximum Script Run Time', 'gpagespeedi' ); ?>:</label></p>
 			<select name="max_run_time" id="max_run_time">
 				<option value="0" <?php selected( $this->gpi_options['max_run_time'], 0 ); ?>><?php _e( 'No Limit', 'gpagespeedi' ); ?></option>
+				<option value="15" <?php selected( $this->gpi_options['max_run_time'], 15 ); ?>><?php _e( '15 Seconds', 'gpagespeedi' ); ?></option>
+				<option value="30" <?php selected( $this->gpi_options['max_run_time'], 30 ); ?>><?php _e( '30 Seconds', 'gpagespeedi' ); ?></option>
+				<option value="45" <?php selected( $this->gpi_options['max_run_time'], 45 ); ?>><?php _e( '45 Seconds', 'gpagespeedi' ); ?></option>
 				<option value="60" <?php selected( $this->gpi_options['max_run_time'], 60 ); ?>><?php _e( '60 Seconds', 'gpagespeedi' ); ?></option>
 				<option value="90" <?php selected( $this->gpi_options['max_run_time'], 90 ); ?>><?php _e( '90 Seconds', 'gpagespeedi' ); ?></option>
 				<option value="120" <?php selected( $this->gpi_options['max_run_time'], 120 ); ?>><?php _e( '120 Seconds', 'gpagespeedi' ); ?></option>
@@ -172,7 +199,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</select>
 			<p class="description">
 				<?php _e( 'Some web hosting providers have limits on script runtime that cannot be overridden. If your scans do not finish completely and changing the Maximum Execution Time does not resolve the problem, this setting may help. Once the specified run time is reached a new scan process will automatically start.', 'gpagespeedi' ); ?>
-				<?php _e( 'It is best to find the largest value that still allows the script to complete successfully. Test first at 60 seconds, then raise the value to 90 if your test is successful. Continue until you find the maximum runtime your host allows.', 'gpagespeedi' ); ?>
+				<?php _e( 'It is best to find the largest value that still allows the script to complete successfully. Test first at 30 seconds, then raise the value to 45 if your test is successful. Continue until you find the maximum runtime your host allows.', 'gpagespeedi' ); ?>
 			</p>
 
 			<p><label for="sleep_time"><?php _e( 'Report Throttling Delay Time', 'gpagespeedi' ); ?>:</label></p>
@@ -201,14 +228,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<p class="description">
 				<?php _e( 'The default value of "Fast" is fine for most sites.', 'gpagespeedi' ); ?>
 				<br />
-				<?php _e( 'More frequent updates may impact Pagespeed reports on poorly performing servers, reduce to rate if you are experiencing issues.', 'gpagespeedi' ); ?>
+				<?php _e( 'More frequent updates may impact Pagespeed reports on poorly performing servers, reduce the rate if you are experiencing issues.', 'gpagespeedi' ); ?>
 			</p>
 
 			<p class="checkbx">
 				<input type="checkbox" name="log_api_errors" id="log_api_errors" <?php checked( $this->gpi_options['log_api_errors'] ); ?>/>
 				<label for="log_api_errors"><?php _e( 'Log API Exceptions', 'gpagespeedi' ); ?></label>
 			</p>
-			<p class="description"><?php _e( 'API error logs will be stored for up to 7 days.', 'gpagespeedi' ); ?> <a href="?page=<?php echo $_REQUEST['page'];?>&amp;render=logs"><?php _e( 'View Logs', 'gpagespeedi' ); ?></a></p>
+			<p class="description"><?php _e( 'API error logs will be stored for up to 7 days.', 'gpagespeedi' ); ?> <a href="?page=<?php echo sanitize_text_field( $_REQUEST['page'] ); ?>&amp;render=logs"><?php _e( 'View Logs', 'gpagespeedi' ); ?></a></p>
 
 			<p><label for="sleep_time"><?php _e( 'Delete Data', 'gpagespeedi' ); ?>:</label></p>
 			<select name="purge_all_data" id="purge_all_data">

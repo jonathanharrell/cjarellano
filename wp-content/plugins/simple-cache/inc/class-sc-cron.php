@@ -1,11 +1,16 @@
 <?php
+/**
+ * Cron functionality
+ *
+ * @package  simple-cache
+ */
+
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Wrap cron functionality
+ */
 class SC_Cron {
-
-	public function __construct() {
-
-	}
 
 	/**
 	 * Setup actions and filters
@@ -22,7 +27,7 @@ class SC_Cron {
 	/**
 	 * Add custom cron schedule
 	 *
-	 * @param  array $schedules
+	 * @param  array $schedules Current cron schedules.
 	 * @since  1.0
 	 * @return array
 	 */
@@ -33,7 +38,16 @@ class SC_Cron {
 		$interval = HOUR_IN_SECONDS;
 
 		if ( ! empty( $config['page_cache_length'] ) && $config['page_cache_length'] > 0 ) {
-			$interval = $config['page_cache_length'] * 60;
+
+			$interval = $config['page_cache_length'] * MINUTE_IN_SECONDS;
+
+			if ( ! empty( $config['page_cache_length'] ) && 'hours' === $config['page_cache_length'] ) {
+				$interval = $config['page_cache_length'] * HOUR_IN_SECONDS;
+			} elseif ( ! empty( $config['page_cache_length'] ) && 'days' === $config['page_cache_length'] ) {
+				$interval = $config['page_cache_length'] * DAY_IN_SECONDS;
+			} elseif ( ! empty( $config['page_cache_length'] ) && 'weeks' === $config['page_cache_length'] ) {
+				$interval = $config['page_cache_length'] * WEEK_IN_SECONDS;
+			}
 		}
 
 		$schedules['simple_cache'] = array(
@@ -65,14 +79,14 @@ class SC_Cron {
 
 		$timestamp = wp_next_scheduled( 'sc_purge_cache' );
 
-		// Do nothing if we are using the object cache
+		// Do nothing if we are using the object cache.
 		if ( ! empty( $config['advanced_mode'] ) && ! empty( $config['enable_in_memory_object_caching'] ) ) {
 			wp_unschedule_event( $timestamp, 'sc_purge_cache' );
 			return;
 		}
 
-		// Expire cache never
-		if ( isset( $config['page_cache_length'] ) && $config['page_cache_length'] === 0 ) {
+		// Expire cache never.
+		if ( isset( $config['page_cache_length'] ) && 0 === $config['page_cache_length'] ) {
 			wp_unschedule_event( $timestamp, 'sc_purge_cache' );
 			return;
 		}
@@ -90,17 +104,21 @@ class SC_Cron {
 	public function purge_cache() {
 		$config = SC_Config::factory()->get();
 
-		// Do nothing, caching is turned off
+		// Do nothing, caching is turned off.
 		if ( empty( $config['enable_page_caching'] ) ) {
 			return;
 		}
 
-		// Do nothing if we are using the object cache
+		// Do nothing if we are using the object cache.
 		if ( ! empty( $config['advanced_mode'] ) && ! empty( $config['enable_in_memory_object_caching'] ) ) {
 			return;
 		}
 
-		sc_cache_flush();
+		if ( SC_IS_NETWORK ) {
+			sc_cache_flush( true );
+		} else {
+			sc_cache_flush();
+		}
 	}
 
 	/**

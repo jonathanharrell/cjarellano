@@ -1,9 +1,8 @@
 === Simple Cache ===
 Contributors: tlovett1
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HR34W94MM53RQ
 Tags: cache, page cache, object caching, object cache, memcache, redis, memcached
 Requires at least: 3.9
-Tested up to: 4.8
+Tested up to: 5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -36,6 +35,22 @@ Pull requests are welcome on [Github](https://github.com/tlovett1/simple-cache).
 For full documentation, questions, feature requests, and support concerning the Simple Cache plugin, please refer to [Github](http://github.com/tlovett1/simple-cache).
 
 == Changelog ==
+
+= 1.7.1 =
+* Fix cache directory write check
+* Fix cache directory write error notice
+
+= 1.7 =
+* Remove `WP_Filesystem` usage
+* Add support for object cache dropin using Memcached extension
+* Add optional constants for setting the config and caching directories
+* Support network-wide installs. Add multisite settings page
+* Support Memcached PHP extension
+
+= 1.6.4 =
+* Fix undefined `$blog_id` warning in redis object cache.
+* Prevent mixed content. Props [benoitchantre](https://github.com/benoitchantre).
+* Added WP_CACHE_KEY_SALT constant with a random value. Props [gagan0123](https://github.com/gagan0123 ).
 
 = 1.6.3 =
 * Fix missing `FS_CHMOD_DIR` and `FS_CHMOD_MODE` in `sc_cache()`. Props [chesio](https://github.com/chesio)

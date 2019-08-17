@@ -23,15 +23,19 @@ class GPI_Admin
 	{
 		$this->gpi_options		= get_option( 'gpagespeedi_options' );
 		$this->gpi_ui_options	= get_option( 'gpagespeedi_ui_options' );
-		$this->strategy			= ( isset( $_GET['strategy'] ) ) ? $_GET['strategy'] : $this->gpi_ui_options['view_preference'];
+		$this->strategy			= ( isset( $_GET['strategy'] ) ) ? sanitize_text_field( $_GET['strategy'] ) : $this->gpi_ui_options['view_preference'];
 
+		add_filter( 'plugin_action_links', array( $this, 'add_settings_link' ), 10, 2 );
 		add_action( 'admin_init', array( $this, 'upgrade_check' ), 10 );
+		add_action( 'pre_uninstall_plugin', array( $this, 'backup_addon_tables' ), 10, 1 );
+		add_action( 'deleted_plugin', array( $this, 'restore_addon_tables' ), 10, 2 );
 		add_action( 'admin_menu', array( $this, 'google_pageinsights_menu' ), 10 );
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		add_action( 'plugins_loaded', array( $this, 'register_languages_dir' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_GPI_style' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'details_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'summary_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'snapshot_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'global_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'js_templates' ) );
 		add_action( 'admin_init', array( $this, 'redirect' ), 9 );
@@ -42,10 +46,24 @@ class GPI_Admin
 		add_filter( 'gpi_error_logs', array( $this, 'get_error_logs' ), 10, 1 );
 		add_filter( 'gpi_filter_options', array( $this, 'get_filter_options' ), 10, 2 );
 		add_filter( 'gpi_custom_post_types', array( $this, 'get_custom_post_types' ), 10, 1 );
+		add_filter( 'gpi_custom_urls_count', array( $this, 'get_custom_urls_count' ), 10, 1 );
+		add_filter( 'gpi_custom_url_labels', array( $this, 'get_custom_url_labels' ), 10, 1 );
 		add_filter( 'gpi_summary_stats', array( $this, 'get_summary_stats' ), 10, 1 );
 		add_filter( 'gpi_summary_reports', array( $this, 'get_summary_reports' ), 10, 1 );
+		add_filter( 'gpi_similar_snapshots', array( $this, 'get_similar_snapshots' ), 10, 2 );
 
 		load_plugin_textdomain( 'gpagespeedi', false, 'google-pagespeed-insights/translations' );
+	}
+
+	public function add_settings_link( $links, $file )
+	{
+		if ( $file != GPI_BASENAME ) {
+			return $links;
+		}
+
+		array_unshift( $links, '<a href="' . esc_url( admin_url( '/tools.php?page=google-pagespeed-insights&render=options' ) ) . '">' . esc_html__( 'Settings', 'acf-font-awesome' ) . '</a>' );
+
+		return $links;
 	}
 
 	public function upgrade_check()
@@ -54,7 +72,62 @@ class GPI_Admin
 			GPI_Activation::upgrade( $this->gpi_options, $this->gpi_ui_options );
 		}
 
+		if ( defined( 'GPIA_PLUGIN_FILE' ) ) {
+			deactivate_plugins( GPIA_PLUGIN_FILE );
+
+			add_action( 'admin_notices', array( $this, 'notify_addon_deactivate' ) );
+		}
+
 		do_action( 'gpi_addon_upgrade_check' );
+	}
+
+	public function backup_addon_tables( $plugin_file )
+	{
+		if ( 'google-pagespeed-insights-addon/google-pagespeed-insights-addon.php' != $plugin_file ) {
+			return;
+		}
+
+		global $wpdb;
+
+		$gpi_summary_snapshots			= $wpdb->prefix . 'gpi_summary_snapshots';
+		$gpi_custom_urls				= $wpdb->prefix . 'gpi_custom_urls';
+		$gpi_summary_snapshots_backup	= $wpdb->prefix . 'gpi_summary_snapshots_backup';
+		$gpi_custom_urls_backup			= $wpdb->prefix . 'gpi_custom_urls_backup';
+
+		// Rename current tables
+		$wpdb->query( "RENAME TABLE $gpi_summary_snapshots TO $gpi_summary_snapshots_backup" );
+		$wpdb->query( "RENAME TABLE $gpi_custom_urls TO $gpi_custom_urls_backup" );
+
+		// Create new blank tables so uninstall hook doesn't produce errors
+		$wpdb->query( "CREATE TABLE $gpi_summary_snapshots (id INT(1) )" );
+		$wpdb->query( "CREATE TABLE $gpi_custom_urls (id INT(1) )" );
+	}
+
+	public function restore_addon_tables( $plugin_file, $deleted )
+	{
+		if ( 'google-pagespeed-insights-addon/google-pagespeed-insights-addon.php' != $plugin_file ) {
+			return;
+		}
+
+		global $wpdb;
+
+		$gpi_summary_snapshots			= $wpdb->prefix . 'gpi_summary_snapshots';
+		$gpi_custom_urls				= $wpdb->prefix . 'gpi_custom_urls';
+		$gpi_summary_snapshots_backup	= $wpdb->prefix . 'gpi_summary_snapshots_backup';
+		$gpi_custom_urls_backup			= $wpdb->prefix . 'gpi_custom_urls_backup';
+
+		// Rename backed up tables to restore
+		$wpdb->query( "RENAME TABLE $gpi_summary_snapshots_backup TO $gpi_summary_snapshots" );
+		$wpdb->query( "RENAME TABLE $gpi_custom_urls_backup TO $gpi_custom_urls" );
+	}
+
+	public function notify_addon_deactivate()
+	{
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php _e( 'The plugin "Google Pagespeed Insights Addon" has automatically been deactivated. As of v3.0 Google Pagespeed Insights now includes all "addon" functionality for free. The "Google Pagespeed Insights Addon" can be uninstalled from the plugins page.', 'gpagespeedi' ); ?></p>
+		</div>
+		<?php
 	}
 
 	public function google_pageinsights_menu()
@@ -64,31 +137,32 @@ class GPI_Admin
 
 	public function render_admin_page()
 	{
-		$admin_page = ( isset( $_GET['render'] ) ) ? $_GET['render'] : 'report-list';
+		$admin_page = ( isset( $_GET['render'] ) ) ? sanitize_text_field( $_GET['render'] ) : 'report-list';
 		?>
 		<div class="wrap">
-			<div id="icon-gpi" class="icon32"><br/></div>
 			<h2>
-				Google Pagespeed Insights
-				<?php
-					if ( $worker_status = apply_filters( 'gpi_check_status', false ) ) :
-						if ( ! get_option( 'gpi_abort_scan' ) ) :
+				<?php _e( 'Google Pagespeed Insights', 'gpagespeedi' ); ?>
+				<div class="global-actions">
+					<?php
+						if ( $worker_status = apply_filters( 'gpi_check_status', false ) ) :
+							if ( ! get_option( 'gpi_abort_scan' ) ) :
+								?>
+								<a href="?page=<?php echo sanitize_text_field( $_REQUEST['page'] ); ?>&amp;render=<?php echo $admin_page; ?>&amp;action=abort-scan" class="button-gpi abort"><?php _e( 'Abort Current Scan', 'gpagespeedi' ); ?></a>
+								<?php
+							else :
+								?>
+								<a href="?page=<?php echo sanitize_text_field( $_REQUEST['page'] ); ?>&amp;render=<?php echo $admin_page; ?>" class="button-gpi abort" disabled><?php _e( 'Abort Current Scan', 'gpagespeedi' ); ?></a>
+								<?php
+							endif;
+						elseif ( $this->gpi_options['google_developer_key'] ) :
 							?>
-							<a href="?page=<?php echo $_REQUEST['page'];?>&amp;render=<?php echo $_REQUEST['render'];?>&amp;action=abort-scan" class="button-gpi abort"><?php _e( 'Abort Current Scan', 'gpagespeedi' ); ?></a>
-							<?php
-						else :
-							?>
-							<a href="?page=<?php echo $_REQUEST['page'];?>&amp;render=<?php echo $_REQUEST['render'];?>" class="button-gpi abort" disabled><?php _e( 'Abort Current Scan', 'gpagespeedi' ); ?></a>
+								<a id="start_scan" href="?page=<?php echo sanitize_text_field( $_REQUEST['page'] ); ?>&amp;render=<?php echo $admin_page; ?>&amp;action=start-scan" class="button-gpi run"><?php _e( 'Start Reporting', 'gpagespeedi' ); ?></a>
+								<input type="checkbox" name="recheck_all_pages" id="recheck_all_pages" />
+								<label for="recheck_all_pages"><?php _e( 'Recheck All', 'gpagespeedi' ); ?> <span class="tooltip" title="<?php _e( 'Ignore last checked date to generate new reports for all pages', 'gpagespeedi' ); ?>">(?)</span></label>
 							<?php
 						endif;
-					elseif ( $this->gpi_options['google_developer_key'] ) :
-						?>
-							<a id="start_scan" href="?page=<?php echo $_REQUEST['page'];?>&amp;render=<?php echo $_REQUEST['render'];?>&amp;action=start-scan" class="button-gpi run"><?php _e( 'Start Reporting', 'gpagespeedi' ); ?></a>
-							<input type="checkbox" name="recheck_all_pages" id="recheck_all_pages" />
-							<label for="recheck_all_pages"><?php _e( 'Recheck All', 'gpagespeedi' ); ?> <span class="tooltip" title="<?php _e( 'Ignore last checked date to generate new reports for all pages', 'gpagespeedi' ); ?>">(?)</span></label>
-						<?php
-					endif;
-				?>
+					?>
+				</div>
 			</h2>
 
 			<?php include GPI_DIRECTORY . '/templates/parts/modes.php'; ?>
@@ -130,7 +204,7 @@ class GPI_Admin
 			return;
 		}
 
-		wp_enqueue_style( 'gpagespeedi_css', plugins_url( '/assets/css/gpagespeedi_styles.css', GPI_PLUGIN_FILE ), false, '2.0.0' );
+		wp_enqueue_style( 'gpagespeedi_css', plugins_url( '/assets/css/gpagespeedi_styles.css', GPI_PLUGIN_FILE ), false, GPI_VERSION );
 
 		wp_register_script( 'gpagespeedi_google_charts', 'https://www.gstatic.com/charts/loader.js' );
 	}
@@ -145,21 +219,30 @@ class GPI_Admin
 			return;
 		}
 
-		$recheck_url = admin_url( '/tools.php?page=google-pagespeed-insights&render=details&page_id=' . $_GET['page_id'] . '&action=single-recheck' );
+		$recheck_url = admin_url( '/tools.php?page=google-pagespeed-insights&render=details&page_id=' . intval( $_GET['page_id'] ) . '&action=single-recheck' );
 
-		wp_enqueue_script( 'gpagespeedi_details_js', plugins_url( '/assets/js/details.js', GPI_PLUGIN_FILE ), array( 'jquery', 'gpagespeedi_google_charts', 'wp-util' ), '2.0.2' );
+		wp_enqueue_script( 'gpagespeedi_details_js', plugins_url( '/assets/js/details.js', GPI_PLUGIN_FILE ), array( 'jquery', 'jquery-ui-accordion', 'gpagespeedi_google_charts', 'wp-util' ), GPI_VERSION, true );
 		wp_localize_script( 'gpagespeedi_details_js', 'GPI_Details', array(
-				'page_stats'	=> $this->get_page_stats( $_GET['page_id'] ),
-				'page_reports'	=> $this->get_page_reports( $_GET['page_id'] ),
+				'page_stats'	=> $this->get_page_stats( intval( $_GET['page_id'] ) ),
+				'page_reports'	=> $this->get_page_reports( intval( $_GET['page_id'] ) ),
 				'recheck_url'	=> wp_nonce_url( $recheck_url, 'gpi-single-recheck' ),
+				'public_path'	=> GPI_PUBLIC_PATH,
 				'strings'		=> array(
-					'hosts'				=> __( 'Number of Hosts', 'gpagespeedi' ),
-					'total_bytes'		=> __( 'Total Request Bytes', 'gpagespeedi' ),
-					'total_resources'	=> __( 'Total Resources', 'gpagespeedi' ),
-					'js_resources'		=> __( 'JavaScript Resources', 'gpagespeedi' ),
-					'css_resources'		=> __( 'CSS Resources', 'gpagespeedi' ),
-					'score_impact'		=> __( 'Score Impact', 'gpagespeedi' ),
-					'old_format_notice'	=> __( 'Google Pagespeed Insights for WordPress has detected an outdated format in this report due to an update in version 2.0 of this plugin. Some report features are unavailable. Please recheck results to resolve this problem.', 'gpagespeedi' )
+					'old_format_notice'			=> sprintf( __( 'Google Pagespeed Insights for WordPress has detected an outdated format in this report due to an update in version %s of this plugin. Some report features are unavailable. Please recheck results to resolve this problem.', 'gpagespeedi' ), '4.0' ),
+					'insufficient_field_data'	=> __( 'The Chrome User Experience Report <a href="https://developers.google.com/speed/docs/insights/about#faq" target="_blank">does not have sufficient real-world speed data</a> for this page.', 'gpagespeedi' ),
+					'FCP'						=> __( 'First Contentful Paint', 'gpagespeedi' ),
+					'FID'						=> __( 'First Input Delay', 'gpagespeedi' ),
+					'field_data_labels'			=> array(
+						__( 'of loads for this page have a fast', 'gpagespeedi' ),
+						__( 'of loads for this page have an average', 'gpagespeedi' ),
+						__( 'of loads for this page have a slow', 'gpagespeedi' )
+					),
+					'shortpixel'				=> array(
+						'title'			=> __( 'Auto-Optimize Images', 'gpagespeedi' ),
+						'description'	=> __( 'Unoptimized images are often one of the <strong>biggest</strong> negative factors in pagespeed scores. Google Pagespeed Insights for WordPress has partnered with ShortPixel to provide an easy and affordable solution to <em>automatically</em> optimize all images.', 'gpagespeedi' ),
+						'signup_desc'	=> __( 'Sign up using the button below and receive <strong>150 free image optimization credits</strong>.', 'gpagespeedi' ),
+						'signup_btn'	=> __( 'Free Sign Up', 'gpagespeedi' )
+					)
 				)
 			)
 		);
@@ -175,20 +258,48 @@ class GPI_Admin
 			return;
 		}
 
-		wp_enqueue_script( 'gpagespeedi_summary_js', plugins_url( '/assets/js/summary.js', GPI_PLUGIN_FILE ), array( 'jquery', 'gpagespeedi_google_charts', 'wp-util' ), '2.0.2' );
+		wp_enqueue_script( 'gpagespeedi_summary_js', plugins_url( '/assets/js/summary.js', GPI_PLUGIN_FILE ), array( 'jquery', 'gpagespeedi_google_charts', 'wp-util' ), GPI_VERSION );
 		wp_localize_script( 'gpagespeedi_summary_js', 'GPI_Summary', array(
 				'summary_stats'		=> $this->get_summary_stats(),
 				'summary_reports'	=> $this->get_summary_reports(),
 				'strings'			=> array(
-					'resource_type'		=> __( 'Resource Type', 'gpagespeedi' ),
-					'high'				=> __( 'High', 'gpagespeedi' ),
-					'average'			=> __( 'Average', 'gpagespeedi' ),
-					'low'				=> __( 'Low', 'gpagespeedi' ),
-					'view_page_report'	=> __( 'View Page Report', 'gpagespeedi' ),
+					'average_score'		=> __( 'Average Score', 'gpagespeedi' ),
+					'best_performing'	=> __( 'View Best Performing', 'gpagespeedi' ),
+					'worst_performing'	=> __( 'View Worst Performing', 'gpagespeedi' ),
 					'old_format_notice'	=> __( 'Google Pagespeed Insights for WordPress has detected an outdated format in one or more reports due to an update in version 2.0 of this plugin. Some report features are unavailable. Please force recheck all reports from the options page to resolve this problem.', 'gpagespeedi' )
 				)
 			)
 		);
+	}
+
+	public function snapshot_scripts( $hook )
+	{
+		if ( $hook != 'tools_page_google-pagespeed-insights' ) {
+			return;
+		}
+
+		if ( ! isset( $_GET['render'] ) || 'view-snapshot' != $_GET['render'] ) {
+			return;
+		}
+
+		$snapshot_data = $this->get_snapshot_data();
+		$strings = array(
+			'strings' => array(
+				'comment'			=> __( 'Comment', 'gpagespeedi' ),
+				'average_score'		=> __( 'Average Score', 'gpagespeedi' ),
+				'best_performing'	=> __( 'View Best Performing', 'gpagespeedi' ),
+				'worst_performing'	=> __( 'View Worst Performing', 'gpagespeedi' )
+			),
+			'comments'	=> array(
+				'snapshot'	=> isset( $snapshot_data['snapshot']['comment'] ) ? sanitize_text_field( $snapshot_data['snapshot']['comment'] ) : false,
+				'compare'	=> isset( $snapshot_data['compare']['comment'] ) ? sanitize_text_field( $snapshot_data['compare']['comment'] ) : false
+			)
+		);
+
+		$localize_data = array_merge( $snapshot_data, $strings );
+
+		wp_enqueue_script( 'gpagespeedi_view_snapshot_js', plugins_url( '/assets/js/view-snapshot.js', GPI_PLUGIN_FILE ), array( 'jquery', 'gpagespeedi_google_charts', 'wp-util' ), GPI_VERSION );
+		wp_localize_script( 'gpagespeedi_view_snapshot_js', 'GPI_View_Snapshot', $localize_data );
 	}
 
 	public function global_scripts( $hook )
@@ -197,7 +308,7 @@ class GPI_Admin
 			return;
 		}
 
-		wp_enqueue_script( 'gpagespeedi_global_js', plugins_url( '/assets/js/global.js', GPI_PLUGIN_FILE ), array( 'jquery', 'heartbeat', 'jquery-ui-tooltip' ), '2.0.2' );
+		wp_enqueue_script( 'gpagespeedi_global_js', plugins_url( '/assets/js/global.js', GPI_PLUGIN_FILE ), array( 'jquery', 'heartbeat', 'jquery-ui-tooltip' ), GPI_VERSION );
 		wp_localize_script( 'gpagespeedi_global_js', 'GPI_Global', array(
 				'heartbeat' => $this->gpi_options['heartbeat'],
 				'progress'	=> get_option( 'gpi_progress' )
@@ -207,7 +318,7 @@ class GPI_Admin
 
 	public function js_templates()
 	{
-		if ( ! isset( $_GET['page'] ) || $_GET['page'] != 'google-pagespeed-insights' ) {
+		if ( ! isset( $_GET['page'] ) || 'google-pagespeed-insights' != $_GET['page'] ) {
 			return;
 		}
 
@@ -215,11 +326,16 @@ class GPI_Admin
 			return;
 		}
 
-		switch ( $_GET['render'] ) {
+		$render = sanitize_text_field( $_GET['render'] );
+
+		switch ( $render ) {
 			case 'details':
 				include_once GPI_DIRECTORY . '/assets/js/templates/details/statistics.php';
-				include_once GPI_DIRECTORY . '/assets/js/templates/details/legend.php';
-				include_once GPI_DIRECTORY . '/assets/js/templates/details/rule_blocks.php';
+				include_once GPI_DIRECTORY . '/assets/js/templates/details/audits-opportunity.php';
+				include_once GPI_DIRECTORY . '/assets/js/templates/details/audits-diagnostic.php';
+				include_once GPI_DIRECTORY . '/assets/js/templates/details/audits-table.php';
+				include_once GPI_DIRECTORY . '/assets/js/templates/details/audits-criticalrequestchain.php';
+				include_once GPI_DIRECTORY . '/assets/js/templates/details/audits-filmstrip.php';
 				break;
 
 			case 'summary':
@@ -227,23 +343,29 @@ class GPI_Admin
 				include_once GPI_DIRECTORY . '/assets/js/templates/summary/scores.php';
 				break;
 
-			case apply_filters( 'gpi_custom_js_templates', $_GET['render'] ):
-				do_action( 'gpi_load_custom_js_template', $_GET['render'] );
+			case 'view-snapshot':
+				include_once GPI_DIRECTORY . '/assets/js/templates/summary/areas_of_improvement.php';
+				include_once GPI_DIRECTORY . '/assets/js/templates/summary/scores.php';
+				include_once GPI_DIRECTORY . '/assets/js/templates/view-snapshot/comment.php';
+				break;
+
+			case apply_filters( 'gpi_custom_js_templates', $render ):
+				do_action( 'gpi_load_custom_js_template', $render );
 				break;
 		}
 	}
 
 	public function redirect()
 	{
-		if ( ! isset( $_GET['page'] ) || $_GET['page'] != 'google-pagespeed-insights' ) {
+		if ( ! isset( $_GET['page'] ) || 'google-pagespeed-insights' != $_GET['page'] ) {
 			return;
 		}
 
 		if ( ! isset( $_GET['render'] ) ) {
 			if ( empty( $this->gpi_options['google_developer_key'] ) ) {
-				wp_redirect( '?page=' . $_REQUEST['page'] . '&render=options' );
+				wp_redirect( '?page=google-pagespeed-insights&render=options' );
 			} else {
-				wp_redirect( '?page=' . $_REQUEST['page'] . '&render=report-list' );
+				wp_redirect( '?page=google-pagespeed-insights&render=report-list' );
 			}
 			exit;
 		}
@@ -320,6 +442,39 @@ class GPI_Admin
 			}
 		}
 
+		if ( $this->gpi_options['check_custom_urls'] ) {
+			global $wpdb;
+
+			$gpi_custom_urls = $wpdb->prefix . 'gpi_custom_urls';
+			$custom_url_types = $wpdb->get_col(
+				"
+				SELECT DISTINCT type
+				FROM $gpi_custom_urls
+				"
+			);
+
+			if ( ! empty( $custom_url_types ) ) {
+				if ( ! $flatlist ) {
+					$custom_url_options = array( 'gpi_custom_urls' => __( 'All Custom URLs', 'gpagespeedi' ) );
+				}
+
+				foreach ( $custom_url_types as $custom_url_type ) {
+					$custom_url_options[ $custom_url_type ] = $custom_url_type;
+				}
+
+				if ( ! $flatlist ) {
+					$options['custom_urls'] = array(
+						'optgroup_label'	=> __( 'Custom URLs', 'gpagespeedi' ),
+						'options'			=> $custom_url_options
+					);
+				} else {
+					if ( ! empty( $custom_url_options ) ) {
+						$options = array_merge( $options, $custom_url_options );
+					}
+				}
+			}
+		}
+
 		$options = apply_filters( 'gpi_custom_filter_options', $options, $flatlist, $this->gpi_options );
 
 		if ( ! $flatlist ) {
@@ -352,6 +507,40 @@ class GPI_Admin
 		return $cpt;
 	}
 
+	public function get_custom_urls_count( $url_count )
+	{
+		global $wpdb;
+
+		$gpi_custom_urls = $wpdb->prefix. 'gpi_custom_urls';
+		
+		return $wpdb->get_var(
+			"
+			SELECT COUNT(*)
+			FROM $gpi_custom_urls
+			"
+		);
+	}
+
+	public function get_custom_url_labels( $custom_url_labels = false )
+	{
+		global $wpdb;
+
+		$gpi_custom_urls = $wpdb->prefix . 'gpi_custom_urls';
+
+		$custom_url_labels = $wpdb->get_col(
+			"
+				SELECT DISTINCT type
+				FROM $gpi_custom_urls
+			"
+		);
+
+		if ( ! empty( $custom_url_labels ) ) {
+			$custom_url_labels = implode( '|', $custom_url_labels );
+		}
+
+		return $custom_url_labels;
+	}
+
 	public function get_summary_stats( $summary_stats = array() )
 	{
 		global $wpdb;
@@ -359,23 +548,27 @@ class GPI_Admin
 		$all_types = $this->get_filter_options( array(), true );
 
 		$gpi_page_stats = $wpdb->prefix . 'gpi_page_stats';
-		$filter			= isset( $_GET['filter'] ) ? $_GET['filter'] : 'all';
+		$filter			= isset( $_GET['filter'] ) ? sanitize_text_field( $_GET['filter'] ) : 'all';
 		$filter			= 'all' != $filter ? $filter : implode( '|', $all_types );
 
 		if ( 'gpi_custom_urls' == $filter ) {
-			$filter = apply_filters( 'gpia_custom_url_labels', false );
+			$filter = apply_filters( 'gpi_custom_url_labels', false );
 		}
 
-		$all_page_stats = $wpdb->get_results( $wpdb->prepare(
-			"
-				SELECT ID, URL, {$this->strategy}_score as score, {$this->strategy}_page_stats as resources
-				FROM $gpi_page_stats
-				WHERE type REGEXP %s
-				AND {$this->strategy}_score IS NOT NULL
-				ORDER BY score DESC
-			",
-			$filter
-		), ARRAY_A );
+		$all_page_stats = array();
+
+		if ( $filter ) {
+			$all_page_stats = $wpdb->get_results( $wpdb->prepare(
+				"
+					SELECT ID, URL, {$this->strategy}_score as score, {$this->strategy}_lab_data as labData
+					FROM $gpi_page_stats
+					WHERE type REGEXP %s
+					AND {$this->strategy}_score IS NOT NULL
+					ORDER BY score DESC
+				",
+				$filter
+			), ARRAY_A );
+		}
 
 		if ( ! $all_page_stats ) {
 			return array();
@@ -384,15 +577,15 @@ class GPI_Admin
 		$pages = count( $all_page_stats );
 		$score = 0;
 
-		$keys = array( 'lowest' => array( 'value' => false, 'url' => false ), 'average' => false, 'highest' => array( 'value' => false, 'url' => false ) );
-		$resource_sizes = array( 'HTML' => $keys, 'CSS' => $keys, 'IMAGES' => $keys, 'JS' => $keys, 'OTHER' => $keys );
 		$page_scores = array();
 		$old_format_detected = false;
 
+		$avg_lab_data	= array();
+
 		foreach ( $all_page_stats as $page_stats ) {
-			$score		+= $page_stats['score'];
-			$resources	= unserialize( $page_stats['resources'] );
-			$report_url	= admin_url( '/tools.php?page=google-pagespeed-insights&render=details&page_id=' . $page_stats['ID'] );
+			$score			+= $page_stats['score'];
+			$lab_data		= unserialize( $page_stats['labData'] );
+			$report_url		= admin_url( '/tools.php?page=google-pagespeed-insights&render=details&page_id=' . $page_stats['ID'] );
 
 			$page_scores[] = array(
 				'score'			=> $page_stats['score'],
@@ -405,20 +598,24 @@ class GPI_Admin
 				$old_format_detected = true;
 			}
 
-			if ( isset( $resources['resource_sizes'] ) ) {
-				foreach ( $resources['resource_sizes'] as $type => $value ) {
-					$resource_sizes[ $type ]['average'] += $value;
+			if ( ! empty( $lab_data ) ) {
+				foreach ( $lab_data as $index => $data ) {
+					if ( ! isset( $avg_lab_data[ $data['title'] ] ) ) {
+						$avg_lab_data[ $data['title'] ] = array( 'lowest' => array( 'value' => false, 'url' => false ), 'average' => false, 'highest' => array( 'value' => false, 'url' => false ) );
+					}
 
-					if ( false === $resource_sizes[ $type ]['highest']['value'] || $value > $resource_sizes[ $type ]['highest']['value'] ) {
-						$resource_sizes[ $type ]['highest'] = array(
-							'value' => $value,
+					$avg_lab_data[ $data['title'] ]['average'] += $data['score'];
+
+					if ( false === $avg_lab_data[ $data['title'] ]['highest']['value'] || $data['score'] > $avg_lab_data[ $data['title'] ]['highest']['value'] ) {
+						$avg_lab_data[ $data['title'] ]['highest'] = array(
+							'value' => $data['displayValue'],
 							'url' => $report_url
 						);
 					}
 
-					if ( false === $resource_sizes[ $type ]['lowest']['value'] || $value < $resource_sizes[ $type ]['lowest']['value'] ) {
-						$resource_sizes[ $type ]['lowest'] = array(
-							'value' => $value,
+					if ( false === $avg_lab_data[ $data['title'] ]['lowest']['value'] || $data['score'] < $avg_lab_data[ $data['title'] ]['lowest']['value'] ) {
+						$avg_lab_data[ $data['title'] ]['lowest'] = array(
+							'value' => $data['displayValue'],
 							'url' => $report_url
 						);
 					}
@@ -426,13 +623,13 @@ class GPI_Admin
 			}
 		}
 
-		foreach ( $resource_sizes as &$values ) {
-			$values['average'] = $values['average'] / $pages;
+		foreach ( $avg_lab_data as &$data ) {
+			$data['average'] = $data['average'] / $pages;
 		}
 
 		$score = round( $score / $pages );
 
-		$high_scores = $this->sort_array( $page_scores, 'score' );
+		$high_scores = $this->sort_array( $page_scores, 'score', 'desc' );
 		$low_scores = array_reverse( $high_scores );
 
 		return array(
@@ -440,7 +637,7 @@ class GPI_Admin
 				'highest'	=> array_slice( $high_scores, 0, 5 ),
 				'lowest'	=> array_slice( $low_scores, 0, 5 )
 			),
-			'resource_sizes'	=> $resource_sizes,
+			'labData'			=> $avg_lab_data,
 			'score'				=> $score,
 			'odometer_rotation'	=> ( ( 3.38 * $score ) + 11 ) . 'deg',
 			'data_format'		=> ( $old_format_detected ) ? '1.0' : GPI_VERSION
@@ -455,27 +652,34 @@ class GPI_Admin
 
 		$gpi_page_stats		= $wpdb->prefix . 'gpi_page_stats';
 		$gpi_page_reports	= $wpdb->prefix . 'gpi_page_reports';
-		$filter				= isset( $_GET['filter'] ) ? $_GET['filter'] : 'all';
+		$filter				= isset( $_GET['filter'] ) ? sanitize_text_field( $_GET['filter'] ) : 'all';
 		$filter				= 'all' != $filter ? $filter : implode( '|', $all_types );
 
 		if ( 'gpi_custom_urls' == $filter ) {
-			$filter = apply_filters( 'gpia_custom_url_labels', false );
+			$filter = apply_filters( 'gpi_custom_url_labels', false );
 		}
 
-		$all_page_reports = $wpdb->get_results( $wpdb->prepare(
-			"
-				SELECT r.rule_key, r.rule_name, r.rule_impact
-				FROM $gpi_page_stats as s
-				INNER JOIN $gpi_page_reports as r
-					ON r.page_id = s.ID
-					AND r.strategy = %s
-				WHERE type REGEXP %s
-				AND {$this->strategy}_score IS NOT NULL
-				ORDER BY r.rule_impact DESC
-			",
-			$this->strategy,
-			$filter
-		), ARRAY_A );
+		$all_page_reports = array();
+
+		if ( $filter ) {
+			$all_page_reports = $wpdb->get_results( $wpdb->prepare(
+				"
+					SELECT r.rule_key, r.rule_name, r.rule_score
+					FROM $gpi_page_stats as s
+					INNER JOIN $gpi_page_reports as r
+						ON r.page_id = s.ID
+						AND r.strategy = %s
+						AND r.rule_type = %s
+						AND r.rule_score < .9
+					WHERE type REGEXP %s
+					AND s.{$this->strategy}_score IS NOT NULL
+					ORDER BY r.rule_score DESC
+				",
+				$this->strategy,
+				'opportunity',
+				$filter
+			), ARRAY_A );
+		}
 
 		if ( ! $all_page_reports ) {
 			return array();
@@ -483,22 +687,23 @@ class GPI_Admin
 
 		foreach ( $all_page_reports as $page_report ) {
 			if ( isset( $summary_reports[ $page_report['rule_key'] ] ) ) {
-				$summary_reports[ $page_report['rule_key'] ]['avg_impact'] += $page_report['rule_impact'];
+				$summary_reports[ $page_report['rule_key'] ]['avg_score'] += $page_report['rule_score'];
 				$summary_reports[ $page_report['rule_key'] ]['occurances']++;
 			} else {
 				$summary_reports[ $page_report['rule_key'] ] = array(
-					'rule_name'	=> ( 'OptimizeImages' != $page_report['rule_key'] ) ? $page_report['rule_name'] : $page_report['rule_name'] . '<span class="shortpixel_blurb"> &ndash; <a href="https://shortpixel.com/h/af/PCFTWNN142247" target="_blank">' . __( 'Auto-Optimize images with ShortPixel. Sign up for 150 free credits!', 'gpagespeedi') . '</a></span>',
-					'avg_impact'	=> $page_report['rule_impact'],
+					'rule_name'		=> ( 'uses-optimized-images' != $page_report['rule_key'] ) ? $page_report['rule_name'] : $page_report['rule_name'] . '<span class="shortpixel_blurb"> &ndash; <a href="https://shortpixel.com/h/af/PCFTWNN142247" target="_blank">' . __( 'Auto-Optimize images with ShortPixel. Sign up for 150 free credits!', 'gpagespeedi') . '</a></span>',
+					'avg_score'		=> $page_report['rule_score'],
 					'occurances'	=> 1
 				);
 			}
 		}
 
 		foreach ( $summary_reports as &$summary_report ) {
-			$summary_report['avg_impact'] = round( $summary_report['avg_impact'] / $summary_report['occurances'], 2 );
+			$summary_report['avg_score'] = round( $summary_report['avg_score'] / $summary_report['occurances'], 2 );
+			$summary_report['avg_score'] = $summary_report['avg_score'] * 100;
 		}
 
-		$summary_reports = $this->sort_array( $summary_reports, 'avg_impact' );
+		$summary_reports = $this->sort_array( $summary_reports, 'avg_score' );
 
 		return array_slice( $summary_reports, 0, 5 );
 	}
@@ -513,14 +718,16 @@ class GPI_Admin
 	public function progress_heartbeat( $response, $data )
 	{
 		if ( ! isset( $data['gpi_heartbeat'] ) || 'progress' != $data['gpi_heartbeat'] ) {
-			return;
+			return $response;
 		}
 
 		$progress = get_option( 'gpi_progress' );
 
 		if ( 'abort' == $progress ) {
+			$response['gpi_progress_tooltip'] = '';
 			$response['gpi_progress'] = 'abort';
 		} else if ( $progress != null ) {
+			$response['gpi_progress_tooltip'] = $progress;
 			$split_status = explode( ' / ', $progress );
 
 			$percent_complete = $split_status[0] / $split_status[1];
@@ -528,6 +735,7 @@ class GPI_Admin
 
 			$response['gpi_progress'] = $percent_complete;
 		} else {
+			$response['gpi_progress_tooltip'] = '';
 			$response['gpi_progress'] = 'done';
 		}
 
@@ -559,7 +767,7 @@ class GPI_Admin
 
 		$page_stats = $wpdb->get_row( $wpdb->prepare(
 			"
-				SELECT URL, {$this->strategy}_page_stats as resources, {$this->strategy}_score as score, {$this->strategy}_last_modified as last_modified
+				SELECT URL, {$this->strategy}_lab_data as labData, {$this->strategy}_field_data as fieldData, {$this->strategy}_score as score, {$this->strategy}_last_modified as last_modified
 				FROM $gpi_page_stats
 				WHERE ID = %d
 			",
@@ -571,7 +779,7 @@ class GPI_Admin
 		}
 
 		// flag if pre 2.0 data structure is detected
-		if ( strpos( $page_stats['resources'], 'numberHosts' ) !== false ) {
+		if ( strpos( $page_stats['labData'], 'numberHosts' ) !== false ) {
 			$page_stats['data_format'] = '1.0';
 		} else {
 			$page_stats['data_format'] = GPI_VERSION;
@@ -602,11 +810,11 @@ class GPI_Admin
 
 		$page_reports = $wpdb->get_results( $wpdb->prepare(
 			"
-				SELECT rule_key, rule_name, rule_impact, rule_blocks
+				SELECT rule_key, rule_name, rule_score, rule_blocks
 				FROM $gpi_page_reports
 				WHERE page_id = %d
 				AND strategy = %s
-				ORDER BY rule_impact DESC
+				ORDER BY rule_score ASC
 			",
 			$page_id,
 			$this->strategy
@@ -615,21 +823,113 @@ class GPI_Admin
 		if ( $page_reports ) {
 			foreach ( $page_reports as &$page_report ) {
 				$page_report['rule_blocks'] = unserialize( $page_report['rule_blocks'] );
+
+				if ( 'uses-optimized-images' == $page_report['rule_key'] ) {
+					$page_report['rule_blocks'] = $this->shortpixel_image_rule_blocks( $page_report['rule_blocks'] );
+				}
 			}
 		}
 
 		return $page_reports;
 	}
 
-	private function sort_array( $array, $key )
+	private function get_snapshot_data()
 	{
-		usort( $array, function( $a, $b ) use ( $key ) {
+		global $wpdb;
+
+		$gpi_summary_snapshots = $wpdb->prefix . 'gpi_summary_snapshots';
+
+		if ( isset( $_GET['snapshot_id'] ) ) {
+			$snapshot = $wpdb->get_row( $wpdb->prepare(
+				"
+				SELECT strategy, type, snaptime, comment, summary_stats, summary_reports
+				FROM $gpi_summary_snapshots
+				WHERE ID = %d
+				",
+				$_GET['snapshot_id']
+			), ARRAY_A );
+		} else {
+			$snapshot = false;
+		}
+
+		if ( isset( $_GET['compare_id'] ) ) {
+			$compare_snapshot = $wpdb->get_row( $wpdb->prepare(
+				"
+				SELECT strategy, type, snaptime, comment, summary_stats, summary_reports
+				FROM $gpi_summary_snapshots
+				WHERE ID = %d
+				",
+				$_GET['compare_id']
+			), ARRAY_A );
+		} else {
+			$compare_snapshot = false;
+		}
+
+		return array(
+			'snapshot'	=> $snapshot,
+			'compare'	=> $compare_snapshot
+		);
+	}
+
+	public function get_similar_snapshots( $similar_snapshots, $current_snapshot_id )
+	{
+		if ( $current_snapshot_id ) {
+			global $wpdb;
+
+			$gpi_summary_snapshots = $wpdb->prefix . 'gpi_summary_snapshots';
+
+			$current_snapshot = $wpdb->get_row( $wpdb->prepare(
+				"
+				SELECT strategy, type
+				FROM $gpi_summary_snapshots
+				WHERE ID = %d
+				",
+				$current_snapshot_id
+			), ARRAY_A );
+
+			$similar_snapshots = $wpdb->get_results( $wpdb->prepare(
+				"
+				SELECT ID, snaptime 
+				FROM $gpi_summary_snapshots
+				WHERE strategy = %s
+				AND type = %s
+				",
+				$current_snapshot['strategy'],
+				$current_snapshot['type']
+			), ARRAY_A );
+		}
+
+		return $similar_snapshots;
+	}
+
+	private function shortpixel_image_rule_blocks( $rule_blocks )
+	{
+		if ( ! isset( $rule_blocks['details']->items ) || empty( $rule_blocks['details']->items ) ) {
+			return $rule_blocks;
+		}
+
+		foreach ( $rule_blocks['details']->items as $index => $item ) {
+			if ( isset( $item->url ) ) {
+				$rule_blocks['details']->items[ $index ]->url = preg_replace(
+					'/(?:href=")(.*?)(?:")/',
+					'href="https://shortpixel.com/gpi/af/PCFTWNN142247?site-url=$1"',
+					$item->url
+				);
+			}
+		}
+
+		return $rule_blocks;
+	}
+
+	private function sort_array( $array, $key, $direction = 'asc' )
+	{
+		usort( $array, function( $a, $b ) use ( $key, $direction ) {
 			if ( abs( $a[ $key ] - $b[ $key ] ) < 0.00000001 ) {
 				return 0; // almost equal
 			} else if ( ( $a[ $key ] - $b[ $key ] ) < 0 ) {   
-				return 1;
+				return $direction == 'asc' ? -1 : 1;
 			} else {
-				return -1;
+				return $direction == 'asc' ? 1 : -1;
 			}
 		});
 
