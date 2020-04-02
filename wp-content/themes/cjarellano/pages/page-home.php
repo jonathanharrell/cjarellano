@@ -11,11 +11,11 @@ get_header();
 <img src="<?php echo get_template_directory_uri(); ?>/img/home-image.jpg">
 <main class="main-content">
     <div class="container">
-        <h1>C.J. Arellano</h1>
+        <h1><a href="<?php echo esc_url(home_url('/about')); ?>">C.J. Arellano</a></h1>
         <nav class="home-nav transition-in">
             <a href="<?php echo esc_url(home_url('/writing')); ?>" class="writer-link">Writer</a>
             <a href="<?php echo esc_url(home_url('/directing')); ?>" class="director-link">Director</a>
-            <a href="<?php echo esc_url(home_url('/about')); ?>" class="editor-link">About</a>
+            <a href="<?php echo esc_url(home_url('/editing')); ?>" class="editor-link">Editor</a>
         </nav>
     </div>
 </main>

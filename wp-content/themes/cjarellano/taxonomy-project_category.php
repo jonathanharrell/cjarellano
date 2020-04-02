@@ -19,19 +19,25 @@ get_header();
                 <p class="lead">
                     <span><?php echo term_description(); ?></span>
                 </p>
-                <?php if(get_field('cja_project_category_reel')) : ?>
-                    <button class="watch-video" data-video-id="reel-video">
-                        <span class="video-lead"><?php echo get_queried_object()->name; ?> reel</span>
-                        <span class="watch-it">Watch it</span>
-                    </button>
+                <?php if(have_rows('cja_project_category_reels')) : ?>
+                    <div class="watch-videos">
+                        <?php while(have_rows('cja_project_category_reels')) : the_row(); ?>
+                            <button class="watch-video" data-video-id="reel-video-<?php echo get_row_index(); ?>">
+                                <span class="video-lead"><?php the_sub_field('title'); ?></span>
+                                <span class="watch-it">Watch it</span>
+                            </button>
+                        <?php endwhile; ?>
+                    </div>
                 <?php endif; ?>
             </div>
         </section>
-        <?php if(get_field('cja_project_category_reel')) : ?>
-            <div class="video-container" id="reel-video">
-                <button class="close-video">×</button>
-                <?php echo trim(get_field('cja_project_category_reel')); ?>
-            </div>
+        <?php if(have_rows('cja_project_category_reels')) : ?>
+            <?php while(have_rows('cja_project_category_reels')) : the_row(); ?>
+                <div class="video-container" id="reel-video-<?php echo get_row_index(); ?>">
+                    <button class="close-video">×</button>
+                    <?php echo trim(get_sub_field('reel')); ?>
+                </div>
+            <?php endwhile; ?>
         <?php endif; ?>
         <?php
         query_posts([
