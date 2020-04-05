@@ -60,6 +60,7 @@
     }
   }
   & .watch-video {
+    height: auto;
     margin-bottom: 3rem;
     @media (--desktop) {
       position: absolute;
