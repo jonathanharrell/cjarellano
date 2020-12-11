@@ -19,4 +19,9 @@
             <?php echo file_get_contents(get_template_directory_uri() . '/img/linkedin.svg'); ?>
         </a>
     </li>
+    <li>
+        <a href="https://www.youtube.com/channel/UC4xrh0L-AuABKRJAX_LNyVg">
+            <?php echo file_get_contents(get_template_directory_uri() . '/img/youtube.svg'); ?>
+        </a>
+    </li>
 </ul>
