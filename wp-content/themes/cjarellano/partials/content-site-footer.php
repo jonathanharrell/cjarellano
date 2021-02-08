@@ -5,6 +5,6 @@
         </h2>
         <a href="mailto:cj@cjarellano.com" class="email">cj@cjarellano.com</a>
         <?php get_template_part( 'partials/content', 'social-links' ); ?>
-        <p class="copyright">&copy; 2017 C.J. Arellano</p>
+        <p class="copyright">&copy; 2020 C.J. Arellano</p>
     </div>
 </footer>
