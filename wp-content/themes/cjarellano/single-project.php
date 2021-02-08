@@ -57,20 +57,6 @@ get_header();
             <?php if(have_rows('cja_project_award') || have_rows('cja_project_quote')) : ?>
                 <h2 class="more-about-title">More about <?php the_title(); ?></h2>
             <?php endif; ?>
-            <?php if(have_rows('cja_project_quote')) : ?>
-                <section class="project-quotes">
-                    <?php while(have_rows('cja_project_quote')) : the_row(); ?>
-                        <div class="quote project-quote">
-                            <blockquote>
-                                <?php the_sub_field('quote'); ?>
-                                <?php if(get_sub_field('source')) : ?>
-                                    <cite><?php the_sub_field('source'); ?></cite>
-                                <?php endif; ?>
-                            </blockquote>
-                        </div>
-                    <?php endwhile; ?>
-                </section>
-            <?php endif; ?>
             <?php if(have_rows('cja_project_award')) : ?>
                 <section class="project-awards">
                     <ul>
@@ -96,6 +82,20 @@ get_header();
                             </li>
                         <?php endwhile; ?>
                     </ul>
+                </section>
+            <?php endif; ?>
+            <?php if(have_rows('cja_project_quote')) : ?>
+                <section class="project-quotes">
+                    <?php while(have_rows('cja_project_quote')) : the_row(); ?>
+                        <div class="quote project-quote">
+                            <blockquote>
+                                <?php the_sub_field('quote'); ?>
+                                <?php if(get_sub_field('source')) : ?>
+                                    <cite><?php the_sub_field('source'); ?></cite>
+                                <?php endif; ?>
+                            </blockquote>
+                        </div>
+                    <?php endwhile; ?>
                 </section>
             <?php endif; ?>
             <?php if(get_field('cja_project_excerpt')) : ?>
