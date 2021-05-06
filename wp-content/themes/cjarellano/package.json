@@ -53,7 +53,7 @@
     "hiq": "^0.5.0",
     "raven-js": "^3.16.1",
     "scrollmagic": "^2.0.5",
-    "underscore": "^1.8.3",
+    "underscore": "^1.12.1",
     "youtube-player": "^5.4.0"
   }
 }
